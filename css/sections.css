@@ -1,6 +1,4 @@
-/* =======================================================
-   SEZIONI
-======================================================= */
+/* SEZIONI */
 
 .section {
     position: relative;
@@ -8,8 +6,6 @@
     padding: 60px 24px;
     background: transparent;
 }
-
-/* SEZIONI ALTERNATE */
 
 .section-alt {
     background: transparent;
@@ -520,9 +516,7 @@
     }
 }
 
-/* =======================================================
-   CALENDARIO
-======================================================= */
+/* CALENDARIO */
 
 .calendar-trigger {
     margin-top: 16px;
@@ -623,6 +617,10 @@
 .calendar-dialog :focus-visible {
     outline: 2px solid #8176B8;
     outline-offset: 3px;
+}
+
+.calendar-dialog .calendar-close:focus {
+    outline: none;
 }
 
 @keyframes calendar-appear {
