@@ -2,14 +2,7 @@
     position: fixed;
     inset: 0;
     z-index: 1000;
-
-    /*
-     * IMPORTANTE PER IL TEST SAFARI:
-     * permettiamo al vero corpo della busta di proseguire
-     * fisicamente oltre il bordo inferiore della viewport.
-     */
-    overflow: visible;
-
+    overflow: hidden;
     pointer-events: auto;
     touch-action: none;
 }
@@ -21,13 +14,6 @@
 .envelope-stage {
     position: absolute;
     inset: 0;
-
-    /*
-     * Anche lo stage deve consentire al corpo della busta
-     * di proseguire oltre il proprio box.
-     */
-    overflow: visible;
-
     perspective: 1800px;
     perspective-origin: 50% 10%;
     cursor: pointer;
@@ -37,12 +23,7 @@
 
 .envelope-body {
     position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 140vh;
-
+    inset: 0;
     z-index: 10;
     pointer-events: none;
     transform: translateY(0);
@@ -52,12 +33,9 @@
 .body-svg {
     position: absolute;
     inset: 0;
-
     display: block;
-
     width: 100%;
     height: 100%;
-
     overflow: visible;
 }
 
@@ -68,11 +46,6 @@
 .body-bottom {
     fill: var(--paper-bottom);
 }
-
-/* =======================================================
-   BORDI / PIEGHE DELLA BUSTA
-   Stesso tratto per tutti i lembi
-======================================================= */
 
 .body-fold {
     fill: none;
@@ -87,10 +60,6 @@
     stroke-width: 2;
     vector-effect: non-scaling-stroke;
 }
-
-/* =======================================================
-   OMBRA DINAMICA DURANTE L'APERTURA
-======================================================= */
 
 .flap-shadow {
     position: absolute;
@@ -112,10 +81,6 @@
     pointer-events: none;
     will-change: opacity, transform;
 }
-
-/* =======================================================
-   LEMBO SUPERIORE
-======================================================= */
 
 .envelope-flap {
     position: absolute;
@@ -140,10 +105,6 @@
     pointer-events: none;
 }
 
-/*
- * Stesso identico bordo utilizzato
- * per gli altri lembi della busta.
- */
 .flap-edge {
     fill: none;
     stroke: rgba(105, 82, 58, 0.22);
@@ -151,11 +112,6 @@
     vector-effect: non-scaling-stroke;
 }
 
-/*
- * Ombra minima sotto il lembo superiore.
- * Serve soltanto a suggerire che il lembo
- * è sovrapposto e può essere aperto.
- */
 .flap-paper {
     fill: url(#paperFront);
     filter:
@@ -164,10 +120,6 @@
             rgba(70, 48, 30, 0.08)
         );
 }
-
-/* =======================================================
-   SIGILLO
-======================================================= */
 
 .wax-seal {
     position: absolute;
@@ -193,15 +145,9 @@
     );
 }
 
-/* =======================================================
-   MOBILE
-======================================================= */
-
 @media (max-width: 760px) {
-
     .wax-seal {
         width: 96px;
         height: 96px;
     }
-
 }
