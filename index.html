@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, viewport-fit=cover"
@@ -13,7 +11,6 @@
         if ("scrollRestoration" in history) {
             history.scrollRestoration = "manual";
         }
-
         window.scrollTo(0, 0);
     </script>
 
@@ -29,39 +26,7 @@
     <link rel="stylesheet" href="css/hero.css">
     <link rel="stylesheet" href="css/sections.css">
     <link rel="stylesheet" href="css/scroll.css">
-
-    <!-- =====================================================
-         TEST SAFARI — CONTINUAZIONE INFERIORE DELLA BUSTA
-
-         È un layer fixed indipendente, come la sonda rossa
-         che Safari ha dimostrato di comporre dietro la toolbar.
-
-         Il layer viene traslato verso il basso della propria
-         altezza per non creare una fascia visibile nella pagina.
-    ====================================================== -->
-
-    <style>
-        .safari-envelope-bottom {
-            position: fixed;
-
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            width: 100%;
-            height: 120px;
-
-            z-index: 999;
-
-            background: var(--paper-bottom);
-
-            transform: translateY(100%);
-
-            pointer-events: none;
-        }
-    </style>
 </head>
-
 
 <body>
 
@@ -69,11 +34,7 @@
          BUSTA
     ====================================================== -->
 
-    <div
-        class="envelope-screen"
-        id="envelopeScreen"
-    >
-
+    <div class="envelope-screen" id="envelopeScreen">
         <div
             class="envelope-stage"
             id="envelopeStage"
@@ -81,74 +42,32 @@
             tabindex="0"
             aria-label="Apri l'invito"
         >
-
-            <div
-                class="envelope-body"
-                id="envelopeBody"
-            >
-
+            <div class="envelope-body" id="envelopeBody">
                 <svg
                     class="body-svg"
                     viewBox="0 0 1000 1000"
                     preserveAspectRatio="none"
                     aria-hidden="true"
                 >
-
-                    <path
-                        class="body-side"
-                        id="bodyLeftPath"
-                    ></path>
-
-                    <path
-                        class="body-side"
-                        id="bodyRightPath"
-                    ></path>
-
-                    <path
-                        class="body-bottom"
-                        id="bodyBottomPath"
-                    ></path>
-
-                    <path
-                        class="body-fold"
-                        id="bodyLeftFold"
-                    ></path>
-
-                    <path
-                        class="body-fold"
-                        id="bodyRightFold"
-                    ></path>
-
-                    <path
-                        class="body-bottom-fold"
-                        id="bodyBottomFold"
-                    ></path>
-
+                    <path class="body-side" id="bodyLeftPath"></path>
+                    <path class="body-side" id="bodyRightPath"></path>
+                    <path class="body-bottom" id="bodyBottomPath"></path>
+                    <path class="body-fold" id="bodyLeftFold"></path>
+                    <path class="body-fold" id="bodyRightFold"></path>
+                    <path class="body-bottom-fold" id="bodyBottomFold"></path>
                 </svg>
-
             </div>
 
+            <div class="flap-shadow" id="flapShadow"></div>
 
-            <div
-                class="flap-shadow"
-                id="flapShadow"
-            ></div>
-
-
-            <div
-                class="envelope-flap"
-                id="flap"
-            >
-
+            <div class="envelope-flap" id="flap">
                 <svg
                     class="flap-svg"
                     viewBox="0 0 1000 1000"
                     preserveAspectRatio="none"
                     aria-hidden="true"
                 >
-
                     <defs>
-
                         <linearGradient
                             id="paperFront"
                             x1="0"
@@ -156,27 +75,22 @@
                             x2="0"
                             y2="1"
                         >
-
                             <stop
                                 id="frontStop1"
                                 offset="0%"
                                 stop-color="#EADCC8"
                             ></stop>
-
                             <stop
                                 id="frontStop2"
                                 offset="58%"
                                 stop-color="#EADCC8"
                             ></stop>
-
                             <stop
                                 id="frontStop3"
                                 offset="100%"
                                 stop-color="#DEC8AD"
                             ></stop>
-
                         </linearGradient>
-
 
                         <linearGradient
                             id="paperBack"
@@ -185,19 +99,9 @@
                             x2="0"
                             y2="1"
                         >
-
-                            <stop
-                                offset="0%"
-                                stop-color="#E4D3BC"
-                            ></stop>
-
-                            <stop
-                                offset="100%"
-                                stop-color="#D8C2A6"
-                            ></stop>
-
+                            <stop offset="0%" stop-color="#E4D3BC"></stop>
+                            <stop offset="100%" stop-color="#D8C2A6"></stop>
                         </linearGradient>
-
 
                         <filter
                             id="paperShadow"
@@ -206,7 +110,6 @@
                             width="140%"
                             height="160%"
                         >
-
                             <feDropShadow
                                 dx="0"
                                 dy="7"
@@ -214,77 +117,34 @@
                                 flood-color="#6F5137"
                                 flood-opacity="0.16"
                             ></feDropShadow>
-
                         </filter>
-
                     </defs>
 
-
-                    <path
-                        class="flap-paper"
-                        id="flapPath"
-                    ></path>
-
-                    <path
-                        class="flap-edge"
-                        id="flapEdgePath"
-                    ></path>
-
+                    <path class="flap-paper" id="flapPath"></path>
+                    <path class="flap-edge" id="flapEdgePath"></path>
                 </svg>
 
-
-                <div
-                    class="wax-seal"
-                    id="waxSeal"
-                >
-
+                <div class="wax-seal" id="waxSeal">
                     <img
                         src="images/sigillo-AE.png"
                         alt=""
                         draggable="false"
                     >
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
-
-    <!-- =====================================================
-         CONTINUAZIONE INFERIORE PER SAFARI
-    ====================================================== -->
-
-    <div
-        class="safari-envelope-bottom"
-        id="safariEnvelopeBottom"
-        aria-hidden="true"
-    ></div>
-
 
     <!-- =====================================================
          SITO
     ====================================================== -->
 
-    <main
-        class="site"
-        id="site"
-    >
+    <main class="site" id="site">
 
+        <!-- HERO -->
 
-        <!-- =================================================
-             HERO
-        ================================================== -->
-
-        <section
-            class="hero"
-            id="hero"
-        >
-
+        <section class="hero" id="hero">
             <div class="hero-content">
-
                 <img
                     class="hero-portrait"
                     src="images/ritratto.png"
@@ -292,20 +152,10 @@
                     draggable="false"
                 >
 
-                <h1>
-                    Enrico &amp; Annachiara
-                </h1>
+                <h1>Enrico &amp; Annachiara</h1>
+                <p class="hero-date">12 giugno 2027</p>
 
-                <p class="hero-date">
-                    12 giugno 2027
-                </p>
-
-
-                <div
-                    class="countdown-paper"
-                    id="countdown"
-                >
-
+                <div class="countdown-paper" id="countdown">
                     <img
                         class="countdown-paper-image"
                         src="images/cartoncino.png"
@@ -314,64 +164,37 @@
                     >
 
                     <div class="countdown-paper-content">
-
                         <div class="countdown-grid">
-
                             <div class="countdown-item">
                                 <strong id="countdownDays">000</strong>
                                 <span>Giorni</span>
                             </div>
-
                             <div class="countdown-item">
                                 <strong id="countdownHours">00</strong>
                                 <span>Ore</span>
                             </div>
-
                             <div class="countdown-item">
                                 <strong id="countdownMinutes">00</strong>
                                 <span>Minuti</span>
                             </div>
-
                             <div class="countdown-item">
                                 <strong id="countdownSeconds">00</strong>
                                 <span>Secondi</span>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </section>
 
+        <!-- RSVP -->
 
-        <!-- =================================================
-             RSVP
-        ================================================== -->
-
-        <section
-            class="section"
-            id="rsvp"
-        >
-
+        <section class="section" id="rsvp">
             <div class="section-inner">
-
                 <h2 class="section-title">
-
-                    <span
-                        class="section-emoji"
-                        aria-hidden="true"
-                    >
-                        💌
-                    </span>
-
+                    <span class="section-emoji" aria-hidden="true">💌</span>
                     Ci sarete?
-
                 </h2>
-
 
                 <a
                     class="button button-primary"
@@ -393,67 +216,46 @@
                         📅 Aggiungi a calendario
                     </button>
                 </div>
-
             </div>
-
         </section>
 
+        <!-- LUOGHI -->
 
-        <!-- =================================================
-             LUOGHI
-        ================================================== -->
-
-        <section
-            class="section section-alt"
-            id="luoghi"
-        >
-
+        <section class="section section-alt" id="luoghi">
             <div class="section-inner">
-
                 <h2 class="section-title">
-
                     <img
                         class="section-title-image"
                         src="images/pin.png"
                         alt=""
                         draggable="false"
                     >
-
                     I luoghi della giornata
-
                 </h2>
-
 
                 <div class="places-grid">
 
-
                     <article class="place-card">
-
                         <h3>
                             <span aria-hidden="true">🏠</span>
                             Casa dello sposo
                         </h3>
 
                         <div class="navigation-buttons">
-
                             <a
                                 class="button button-small map-button"
                                 href="https://maps.app.goo.gl/kmqRrXZQPzqEgdiU8"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
                                     class="navigation-logo"
                                     src="images/maps.png"
                                     alt=""
                                     draggable="false"
                                 >
-
                                 Maps
-
                             </a>
-
 
                             <a
                                 class="button button-small map-button"
@@ -461,50 +263,38 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
                                     class="navigation-logo"
                                     src="images/waze.png"
                                     alt=""
                                     draggable="false"
                                 >
-
                                 Waze
-
                             </a>
-
                         </div>
-
                     </article>
 
-
                     <article class="place-card">
-
                         <h3>
                             <span aria-hidden="true">🏠</span>
                             Casa della sposa
                         </h3>
 
                         <div class="navigation-buttons">
-
                             <a
                                 class="button button-small map-button"
                                 href="https://maps.app.goo.gl/kNUKDeFUFzFnu2As5"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
                                     class="navigation-logo"
                                     src="images/maps.png"
                                     alt=""
                                     draggable="false"
                                 >
-
                                 Maps
-
                             </a>
-
 
                             <a
                                 class="button button-small map-button"
@@ -512,50 +302,38 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
                                     class="navigation-logo"
                                     src="images/waze.png"
                                     alt=""
                                     draggable="false"
                                 >
-
                                 Waze
-
                             </a>
-
                         </div>
-
                     </article>
 
-
                     <article class="place-card">
-
                         <h3>
                             <span aria-hidden="true">⛪</span>
                             Chiesa di San Martino Vescovo
                         </h3>
 
                         <div class="navigation-buttons">
-
                             <a
                                 class="button button-small map-button"
                                 href="https://maps.app.goo.gl/6omwCTy1Atd1c3Cb7"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
                                     class="navigation-logo"
                                     src="images/maps.png"
                                     alt=""
                                     draggable="false"
                                 >
-
                                 Maps
-
                             </a>
-
 
                             <a
                                 class="button button-small map-button"
@@ -563,20 +341,15 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
                                     class="navigation-logo"
                                     src="images/waze.png"
                                     alt=""
                                     draggable="false"
                                 >
-
                                 Waze
-
                             </a>
-
                         </div>
-
 
                         <a
                             class="button ceremony-button"
@@ -586,37 +359,29 @@
                         >
                             📖 Segui con noi la cerimonia
                         </a>
-
                     </article>
 
-
                     <article class="place-card">
-
                         <h3>
                             <span aria-hidden="true">🥂</span>
                             Masseria La Morella
                         </h3>
 
                         <div class="navigation-buttons">
-
                             <a
                                 class="button button-small map-button"
                                 href="https://maps.app.goo.gl/2apy9TeoYDG768eM7"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
                                     class="navigation-logo"
                                     src="images/maps.png"
                                     alt=""
                                     draggable="false"
                                 >
-
                                 Maps
-
                             </a>
-
 
                             <a
                                 class="button button-small map-button"
@@ -624,56 +389,31 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
                                     class="navigation-logo"
                                     src="images/waze.png"
                                     alt=""
                                     draggable="false"
                                 >
-
                                 Waze
-
                             </a>
-
                         </div>
-
                     </article>
 
                 </div>
-
             </div>
-
         </section>
 
+        <!-- ALBUM -->
 
-        <!-- =================================================
-             ALBUM
-        ================================================== -->
-
-        <section
-            class="section"
-            id="album"
-        >
-
+        <section class="section" id="album">
             <div class="section-inner">
-
                 <h2 class="section-title">
-
-                    <span
-                        class="section-emoji"
-                        aria-hidden="true"
-                    >
-                        📸
-                    </span>
-
+                    <span class="section-emoji" aria-hidden="true">📸</span>
                     Condividi con noi le foto del nostro giorno
-
                 </h2>
 
-
                 <div class="album-card">
-
                     <a
                         class="button button-primary"
                         href="https://www.wedshoots.com/it?albumId=ITb2ea31c8"
@@ -683,17 +423,9 @@
                         Apri WedShoots
                     </a>
 
-
                     <div class="access-code">
-
-                        <span class="access-code-label">
-                            Codice album
-                        </span>
-
-                        <strong id="wedshootsCode">
-                            ITb2ea31c8
-                        </strong>
-
+                        <span class="access-code-label">Codice album</span>
+                        <strong id="wedshootsCode">ITb2ea31c8</strong>
                         <button
                             class="copy-button"
                             id="copyWedshootsCode"
@@ -701,47 +433,25 @@
                         >
                             Copia
                         </button>
-
                     </div>
-
                 </div>
-
             </div>
-
         </section>
 
+        <!-- IL NOSTRO SOGNO -->
 
-        <!-- =================================================
-             IL NOSTRO SOGNO
-        ================================================== -->
-
-        <section
-            class="section section-alt"
-            id="sogno"
-        >
-
+        <section class="section section-alt" id="sogno">
             <div class="section-inner">
-
                 <h2 class="section-title">
-
-                    <span
-                        class="section-emoji"
-                        aria-hidden="true"
-                    >
-                        ❤️
-                    </span>
-
+                    <span class="section-emoji" aria-hidden="true">❤️</span>
                     Il nostro sogno
-
                 </h2>
-
 
                 <p class="section-text">
                     Il nostro desiderio più grande è avervi con noi
                     nel nostro giorno. Se desideri contribuire alla
                     realizzazione del nostro sogno, clicca qui
                 </p>
-
 
                 <button
                     class="button"
@@ -750,47 +460,22 @@
                     aria-expanded="false"
                     aria-controls="giftDetails"
                 >
-
-                    <span aria-hidden="true">
-                        💝
-                    </span>
-
+                    <span aria-hidden="true">💝</span>
                     Scopri di più
-
                 </button>
 
-
-                <div
-                    class="gift-details"
-                    id="giftDetails"
-                    hidden
-                >
-
+                <div class="gift-details" id="giftDetails" hidden>
                     <div class="gift-row">
-
-                        <span>
-                            Intestatario
-                        </span>
-
-                        <strong>
-                            Enrico Forte
-                        </strong>
-
+                        <span>Intestatario</span>
+                        <strong>Enrico Forte</strong>
                     </div>
 
-
                     <div class="gift-row gift-iban">
-
-                        <span>
-                            IBAN
-                        </span>
-
+                        <span>IBAN</span>
                         <strong id="ibanCode">
                             IT95D0367401600000878189011
                         </strong>
-
                     </div>
-
 
                     <button
                         class="copy-button"
@@ -800,85 +485,42 @@
                         Copia IBAN
                     </button>
 
-
                     <div class="gift-row">
-
-                        <span>
-                            BIC / SWIFT
-                        </span>
-
-                        <strong>
-                            TRBKITMMXXX
-                        </strong>
-
+                        <span>BIC / SWIFT</span>
+                        <strong>TRBKITMMXXX</strong>
                     </div>
-
                 </div>
-
             </div>
-
         </section>
 
+        <!-- FIAT 500 -->
 
-        <!-- =================================================
-             FIAT 500
-        ================================================== -->
-
-        <div
-            class="footer-500"
-            aria-hidden="true"
-        >
-
+        <div class="footer-500" aria-hidden="true">
             <img
                 src="images/500.png"
                 alt=""
                 draggable="false"
             >
-
         </div>
-
     </main>
 
-
-    <!-- =====================================================
-         INDICATORE SCROLL
-    ====================================================== -->
+    <!-- INDICATORE SCROLL -->
 
     <div
         class="scroll-indicator"
         id="scrollIndicator"
         aria-hidden="true"
     >
+        <span class="scroll-label">Scorri</span>
 
-        <span class="scroll-label">
-            Scorri
-        </span>
-
-
-        <span
-            class="scroll-arrow"
-            aria-hidden="true"
-        >
-
-            <svg
-                viewBox="0 0 24 24"
-                focusable="false"
-            >
-
-                <path
-                    d="M12 4.5V18.5M6.5 13L12 18.5L17.5 13"
-                ></path>
-
+        <span class="scroll-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 4.5V18.5M6.5 13L12 18.5L17.5 13"></path>
             </svg>
-
         </span>
-
     </div>
 
-
-    <!-- =====================================================
-         SCRIPT
-    ====================================================== -->
+    <!-- CALENDARIO -->
 
     <dialog
         class="calendar-dialog"
@@ -894,15 +536,42 @@
                 aria-label="Chiudi calendario"
                 autofocus
             >×</button>
-            <h2 id="calendarTitle"><em>Matrimonio Enrico &amp; Annachiara ❤️</em></h2>
+
+            <h2 id="calendarTitle">
+                <em>Matrimonio Enrico &amp; Annachiara ❤️</em>
+            </h2>
+
             <p id="calendarDate">12 giugno 2027</p>
+
             <div class="calendar-actions">
-                <a class="button button-secondary" id="calendarGoogle" target="_blank" rel="noopener noreferrer">Google Calendar</a>
-                <button class="button button-secondary" id="calendarApple" type="button">Apple Calendar</button>
-                <a class="button button-secondary" id="calendarOutlook" target="_blank" rel="noopener noreferrer">Outlook</a>
+                <a
+                    class="button button-secondary"
+                    id="calendarGoogle"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Google Calendar
+                </a>
+                <button
+                    class="button button-secondary"
+                    id="calendarApple"
+                    type="button"
+                >
+                    Apple Calendar
+                </button>
+                <a
+                    class="button button-secondary"
+                    id="calendarOutlook"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Outlook
+                </a>
             </div>
         </div>
     </dialog>
+
+    <!-- SCRIPT -->
 
     <script src="js/envelope.js"></script>
     <script src="js/countdown.js"></script>
@@ -910,5 +579,4 @@
     <script src="js/hero.js"></script>
 
 </body>
-
 </html>
