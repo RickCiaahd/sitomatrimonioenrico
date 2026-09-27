@@ -2,7 +2,14 @@
     position: fixed;
     inset: 0;
     z-index: 1000;
-    overflow: hidden;
+
+    /*
+     * IMPORTANTE PER IL TEST SAFARI:
+     * permettiamo al vero corpo della busta di proseguire
+     * fisicamente oltre il bordo inferiore della viewport.
+     */
+    overflow: visible;
+
     pointer-events: auto;
     touch-action: none;
 }
@@ -14,6 +21,13 @@
 .envelope-stage {
     position: absolute;
     inset: 0;
+
+    /*
+     * Anche lo stage deve consentire al corpo della busta
+     * di proseguire oltre il proprio box.
+     */
+    overflow: visible;
+
     perspective: 1800px;
     perspective-origin: 50% 10%;
     cursor: pointer;
@@ -23,7 +37,12 @@
 
 .envelope-body {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 140vh;
+
     z-index: 10;
     pointer-events: none;
     transform: translateY(0);
@@ -33,9 +52,12 @@
 .body-svg {
     position: absolute;
     inset: 0;
+
     display: block;
+
     width: 100%;
     height: 100%;
+
     overflow: visible;
 }
 
