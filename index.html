@@ -30,11 +30,17 @@
     <link rel="stylesheet" href="css/scroll.css">
 
     <!-- =====================================================
-         TEST TEMPORANEO SAFARI
+         TEST SAFARI — CONTINUAZIONE INFERIORE DELLA BUSTA
+
+         È un layer fixed indipendente, come la sonda rossa
+         che Safari ha dimostrato di comporre dietro la toolbar.
+
+         Il layer viene traslato verso il basso della propria
+         altezza per non creare una fascia visibile nella pagina.
     ====================================================== -->
 
     <style>
-        .safari-fixed-test {
+        .safari-envelope-bottom {
             position: fixed;
 
             left: 0;
@@ -42,11 +48,13 @@
             bottom: 0;
 
             width: 100%;
-            height: 100px;
+            height: 120px;
 
-            z-index: 99999;
+            z-index: 999;
 
-            background: #ff0000;
+            background: var(--paper-bottom);
+
+            transform: translateY(100%);
 
             pointer-events: none;
         }
@@ -242,6 +250,17 @@
         </div>
 
     </div>
+
+
+    <!-- =====================================================
+         CONTINUAZIONE INFERIORE PER SAFARI
+    ====================================================== -->
+
+    <div
+        class="safari-envelope-bottom"
+        id="safariEnvelopeBottom"
+        aria-hidden="true"
+    ></div>
 
 
     <!-- =====================================================
@@ -806,16 +825,6 @@
         </div>
 
     </main>
-
-
-    <!-- =====================================================
-         TEST TEMPORANEO SAFARI
-    ====================================================== -->
-
-    <div
-        class="safari-fixed-test"
-        aria-hidden="true"
-    ></div>
 
 
     <!-- =====================================================
