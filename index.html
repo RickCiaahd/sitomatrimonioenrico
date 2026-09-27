@@ -381,6 +381,18 @@
                     Conferma la tua presenza
                 </a>
 
+                <div class="calendar-trigger">
+                    <button
+                        class="button button-secondary"
+                        id="calendarOpen"
+                        type="button"
+                        aria-haspopup="dialog"
+                        aria-controls="calendarDialog"
+                    >
+                        📅 Aggiungi a calendario
+                    </button>
+                </div>
+
             </div>
 
         </section>
@@ -866,6 +878,30 @@
     <!-- =====================================================
          SCRIPT
     ====================================================== -->
+
+    <dialog
+        class="calendar-dialog"
+        id="calendarDialog"
+        aria-labelledby="calendarTitle"
+        aria-describedby="calendarDate"
+    >
+        <div class="calendar-paper">
+            <button
+                class="calendar-close"
+                id="calendarClose"
+                type="button"
+                aria-label="Chiudi calendario"
+                autofocus
+            >×</button>
+            <h2 id="calendarTitle"><em>Matrimonio Enrico &amp; Annachiara ❤️</em></h2>
+            <p id="calendarDate">12 giugno 2027</p>
+            <div class="calendar-actions">
+                <a class="button button-secondary" id="calendarGoogle" target="_blank" rel="noopener noreferrer">Google Calendar</a>
+                <button class="button button-secondary" id="calendarApple" type="button">Apple Calendar</button>
+                <a class="button button-secondary" id="calendarOutlook" target="_blank" rel="noopener noreferrer">Outlook</a>
+            </div>
+        </div>
+    </dialog>
 
     <script src="js/envelope.js"></script>
     <script src="js/countdown.js"></script>
