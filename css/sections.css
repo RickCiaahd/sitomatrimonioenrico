@@ -1021,15 +1021,26 @@
     right: 18px;
     display: grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
+    width: 30px;
+    height: 30px;
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background: transparent;
-    color: inherit;
-    font: 32px/1 Arial, Helvetica, sans-serif;
+    background: #ABA5F0;
+    color: #FFFFFF;
+    font: 24px/1 Arial, Helvetica, sans-serif;
     cursor: pointer;
+}
+
+.calendar-close::after {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+}
+
+.calendar-close:hover {
+    background: #9D96E4;
 }
 
 .calendar-dialog :focus-visible {
