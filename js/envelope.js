@@ -27,12 +27,15 @@ const BODY_START = 1600;
 const BODY_DURATION = 1450;
 const FLAP_FADE_DURATION = 280;
 
+const SCROLL_UNLOCK_PROGRESS = 0.85;
+
 let flapFrameId = null;
 let bodyFrameId = null;
 let fadeFrameId = null;
 
 let opening = false;
 let opened = false;
+let scrollUnlocked = false;
 
 window.envelopeState = {
     opened: false
@@ -77,6 +80,18 @@ function wait(milliseconds) {
             milliseconds
         );
     });
+}
+
+function unlockPageScroll() {
+    if (scrollUnlocked) {
+        return;
+    }
+
+    scrollUnlocked = true;
+
+    document.documentElement.classList.remove(
+        "envelope-closed"
+    );
 }
 
 
@@ -396,6 +411,12 @@ function animateEnvelopeDown() {
 
             envelopeBody.style.transform =
                 `translateY(${112 * e}vh)`;
+
+            if (
+                progress >= SCROLL_UNLOCK_PROGRESS
+            ) {
+                unlockPageScroll();
+            }
         },
         id => {
             bodyFrameId = id;
@@ -477,6 +498,8 @@ async function openEnvelope() {
         fadePromise
     ]);
 
+    unlockPageScroll();
+
     opening =
         false;
 
@@ -493,14 +516,6 @@ async function openEnvelope() {
     envelopeScreen.setAttribute(
         "aria-hidden",
         "true"
-    );
-
-    /*
-     * La busta è ormai scomparsa.
-     * Solo adesso sblocchiamo completamente lo scroll.
-     */
-    document.documentElement.classList.remove(
-        "envelope-closed"
     );
 
     envelopeScreen.style.pointerEvents =
