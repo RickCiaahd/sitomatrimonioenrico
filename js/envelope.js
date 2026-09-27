@@ -27,7 +27,7 @@ const BODY_START = 1600;
 const BODY_DURATION = 1450;
 const FLAP_FADE_DURATION = 280;
 
-const SCROLL_UNLOCK_PROGRESS = 0.85;
+const SCROLL_UNLOCK_PROGRESS = 0.80;
 
 let flapFrameId = null;
 let bodyFrameId = null;
