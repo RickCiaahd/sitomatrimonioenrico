@@ -451,15 +451,6 @@ async function openEnvelope() {
     opening =
         true;
 
-    /*
-     * Il tap è avvenuto:
-     * da questo momento lo scroll della pagina torna
-     * disponibile a livello di html/body.
-     */
-    document.documentElement.classList.remove(
-        "envelope-closed"
-    );
-
     window.dispatchEvent(
         new CustomEvent(
             "envelopeopening"
@@ -486,24 +477,6 @@ async function openEnvelope() {
         fadePromise
     ]);
 
-    /*
-     * La busta ha terminato visivamente l'apertura.
-     *
-     * Da questo preciso momento il suo overlay non deve
-     * più poter intercettare mouse, trackpad o gesture touch.
-     */
-    envelopeScreen.style.pointerEvents =
-        "none";
-
-    envelopeScreen.style.touchAction =
-        "auto";
-
-    envelopeStage.style.pointerEvents =
-        "none";
-
-    envelopeStage.style.touchAction =
-        "auto";
-
     opening =
         false;
 
@@ -523,13 +496,25 @@ async function openEnvelope() {
     );
 
     /*
-     * Nascondiamo completamente l'overlay.
-     *
-     * IMPORTANTE:
-     * qui NON viene più eseguito window.scrollTo(0, 0).
-     * Se l'utente comincia immediatamente a scorrere,
-     * la sua posizione non viene quindi più sovrascritta.
+     * La busta è ormai scomparsa.
+     * Solo adesso sblocchiamo completamente lo scroll.
      */
+    document.documentElement.classList.remove(
+        "envelope-closed"
+    );
+
+    envelopeScreen.style.pointerEvents =
+        "none";
+
+    envelopeScreen.style.touchAction =
+        "auto";
+
+    envelopeStage.style.pointerEvents =
+        "none";
+
+    envelopeStage.style.touchAction =
+        "auto";
+
     envelopeScreen.hidden =
         true;
 
@@ -546,20 +531,11 @@ async function openEnvelope() {
 ======================================================= */
 
 function initialiseEnvelope() {
-    /*
-     * Questo scrollTo rimane intenzionalmente.
-     * Serve soltanto all'avvio per mostrare sempre
-     * l'invito dalla parte superiore della pagina.
-     */
     window.scrollTo(
         0,
         0
     );
 
-    /*
-     * Finché l'utente non tocca la busta,
-     * la pagina non può essere scrollata.
-     */
     document.documentElement.classList.add(
         "envelope-closed"
     );
