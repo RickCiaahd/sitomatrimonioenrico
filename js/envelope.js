@@ -27,7 +27,7 @@ const BODY_START = 1600;
 const BODY_DURATION = 1450;
 const FLAP_FADE_DURATION = 280;
 
-const SCROLL_UNLOCK_PROGRESS = 0.80;
+const SCROLL_UNLOCK_PROGRESS = 0.65;
 
 let flapFrameId = null;
 let bodyFrameId = null;
@@ -88,6 +88,13 @@ function unlockPageScroll() {
     }
 
     scrollUnlocked = true;
+
+    // Lascia passare i nuovi gesti mentre termina l'animazione.
+    envelopeScreen.style.pointerEvents = "none";
+    envelopeScreen.style.touchAction = "auto";
+
+    envelopeStage.style.pointerEvents = "none";
+    envelopeStage.style.touchAction = "auto";
 
     document.documentElement.classList.remove(
         "envelope-closed"
