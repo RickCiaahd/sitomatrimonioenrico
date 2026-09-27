@@ -2,15 +2,13 @@
     position: fixed;
     inset: 0;
     z-index: 1000;
-    overflow: hidden;
+    overflow: visible;
     pointer-events: auto;
     touch-action: none;
 }
-
 .envelope-screen.opened {
     pointer-events: none;
 }
-
 .envelope-stage {
     position: absolute;
     inset: 0;
@@ -20,7 +18,6 @@
     outline: none;
     -webkit-tap-highlight-color: transparent;
 }
-
 .envelope-body {
     position: absolute;
     inset: 0;
@@ -29,7 +26,6 @@
     transform: translateY(0);
     will-change: transform;
 }
-
 .body-svg {
     position: absolute;
     inset: 0;
@@ -38,29 +34,24 @@
     height: 100%;
     overflow: visible;
 }
-
 .body-side {
     fill: var(--paper-side);
 }
-
 .body-bottom {
     fill: var(--paper-bottom);
 }
-
 .body-fold {
     fill: none;
     stroke: rgba(105, 82, 58, 0.22);
     stroke-width: 2;
     vector-effect: non-scaling-stroke;
 }
-
 .body-bottom-fold {
     fill: none;
     stroke: rgba(105, 82, 58, 0.22);
     stroke-width: 2;
     vector-effect: non-scaling-stroke;
 }
-
 .flap-shadow {
     position: absolute;
     left: 50%;
@@ -81,7 +72,6 @@
     pointer-events: none;
     will-change: opacity, transform;
 }
-
 .envelope-flap {
     position: absolute;
     left: 0;
@@ -94,7 +84,6 @@
     opacity: 1;
     will-change: transform, opacity;
 }
-
 .flap-svg {
     position: absolute;
     inset: 0;
@@ -104,23 +93,16 @@
     overflow: visible;
     pointer-events: none;
 }
-
 .flap-edge {
     fill: none;
     stroke: rgba(105, 82, 58, 0.22);
     stroke-width: 2;
     vector-effect: non-scaling-stroke;
 }
-
 .flap-paper {
     fill: url(#paperFront);
-    filter:
-        drop-shadow(
-            0 2px 1.5px
-            rgba(70, 48, 30, 0.08)
-        );
+    filter: drop-shadow(0 2px 1.5px rgba(70, 48, 30, 0.08));
 }
-
 .wax-seal {
     position: absolute;
     left: 50%;
@@ -133,18 +115,13 @@
     pointer-events: none;
     will-change: left, top;
 }
-
 .wax-seal img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(
-        0 6px 7px
-        rgba(70, 25, 20, 0.24)
-    );
+    filter: drop-shadow(0 6px 7px rgba(70, 25, 20, 0.24));
 }
-
 @media (max-width: 760px) {
     .wax-seal {
         width: 96px;
