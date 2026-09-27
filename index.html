@@ -2,21 +2,29 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
+    >
+
+    <link
+        rel="preload"
+        href="images/sigillo-AE.png"
+        as="image"
+        fetchpriority="high"
     >
 
     <script>
         if ("scrollRestoration" in history) {
             history.scrollRestoration = "manual";
         }
+
         window.scrollTo(0, 0);
     </script>
 
     <title>Enrico & Annachiara | 12 giugno 2027</title>
 
-    <link rel="preload" href="images/sigillo-AE.png" as="image">
     <link rel="preload" href="images/ritratto.png" as="image">
     <link rel="preload" href="images/cartoncino.png" as="image">
     <link rel="preload" href="images/carta-moduli.png" as="image">
@@ -78,11 +86,13 @@
                                 offset="0%"
                                 stop-color="#EADCC8"
                             ></stop>
+
                             <stop
                                 id="frontStop2"
                                 offset="58%"
                                 stop-color="#EADCC8"
                             ></stop>
+
                             <stop
                                 id="frontStop3"
                                 offset="100%"
@@ -97,8 +107,15 @@
                             x2="0"
                             y2="1"
                         >
-                            <stop offset="0%" stop-color="#E4D3BC"></stop>
-                            <stop offset="100%" stop-color="#D8C2A6"></stop>
+                            <stop
+                                offset="0%"
+                                stop-color="#E4D3BC"
+                            ></stop>
+
+                            <stop
+                                offset="100%"
+                                stop-color="#D8C2A6"
+                            ></stop>
                         </linearGradient>
 
                         <filter
@@ -125,6 +142,8 @@
                 <div class="wax-seal" id="waxSeal">
                     <img
                         src="images/sigillo-AE.png"
+                        loading="eager"
+                        fetchpriority="high"
                         alt=""
                         draggable="false"
                     >
@@ -149,7 +168,10 @@
                 >
 
                 <h1>Enrico &amp; Annachiara</h1>
-                <p class="hero-date">12 giugno 2027</p>
+
+                <p class="hero-date">
+                    12 giugno 2027
+                </p>
 
                 <div class="countdown-paper" id="countdown">
                     <img
@@ -165,14 +187,17 @@
                                 <strong id="countdownDays">000</strong>
                                 <span>Giorni</span>
                             </div>
+
                             <div class="countdown-item">
                                 <strong id="countdownHours">00</strong>
                                 <span>Ore</span>
                             </div>
+
                             <div class="countdown-item">
                                 <strong id="countdownMinutes">00</strong>
                                 <span>Minuti</span>
                             </div>
+
                             <div class="countdown-item">
                                 <strong id="countdownSeconds">00</strong>
                                 <span>Secondi</span>
@@ -421,7 +446,11 @@
 
                     <div class="access-code">
                         <span class="access-code-label">Codice album</span>
-                        <strong id="wedshootsCode">ITb2ea31c8</strong>
+
+                        <strong id="wedshootsCode">
+                            ITb2ea31c8
+                        </strong>
+
                         <button
                             class="copy-button"
                             id="copyWedshootsCode"
@@ -548,6 +577,7 @@
                 >
                     Google Calendar
                 </a>
+
                 <button
                     class="button button-secondary"
                     id="calendarApple"
@@ -555,6 +585,7 @@
                 >
                     Apple Calendar
                 </button>
+
                 <a
                     class="button button-secondary"
                     id="calendarOutlook"
