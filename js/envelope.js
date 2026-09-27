@@ -27,15 +27,6 @@ const BODY_START = 1600;
 const BODY_DURATION = 1450;
 const FLAP_FADE_DURATION = 280;
 
-/*
- * Il corpo della busta viene prolungato del 40%
- * oltre il bordo inferiore della viewport.
- *
- * 1000 = altezza originaria visibile
- * 1400 = nuova altezza complessiva
- */
-const BODY_VIEWBOX_HEIGHT = 1400;
-
 let flapFrameId = null;
 let bodyFrameId = null;
 let fadeFrameId = null;
@@ -172,50 +163,15 @@ function getFlapGeometry(t) {
 ======================================================= */
 
 function drawEnvelopeBody() {
-    /*
-     * Il body SVG viene portato da:
-     *
-     *     0 0 1000 1000
-     *
-     * a:
-     *
-     *     0 0 1000 1400
-     *
-     * Contemporaneamente .envelope-body passa da 100vh
-     * a 140vh.
-     *
-     * In questo modo 100 unità SVG continuano a
-     * corrispondere esattamente a 10vh:
-     *
-     *     1000 / 100vh
-     *     1400 / 140vh
-     *
-     * Quindi tutta la geometria compresa fra 0 e 1000
-     * mantiene esattamente le proporzioni precedenti.
-     */
-    const bodySvg =
-        envelopeBody.querySelector(".body-svg");
-
-    bodySvg.setAttribute(
-        "viewBox",
-        `0 0 1000 ${BODY_VIEWBOX_HEIGHT}`
-    );
-
     const sideStartY = 192.5;
     const sideMeetY = 500;
     const leftMeetX = 492;
     const rightMeetX = 508;
 
-    /*
-     * I lembi laterali vengono semplicemente chiusi
-     * sul nuovo fondo a 1400.
-     *
-     * La parte visibile fino a y=1000 resta invariata.
-     */
     bodyLeftPath.setAttribute("d", `
         M 0 ${sideStartY}
         L ${leftMeetX} ${sideMeetY}
-        L 0 ${BODY_VIEWBOX_HEIGHT}
+        L 0 1000
         Z
     `);
 
@@ -226,7 +182,7 @@ function drawEnvelopeBody() {
 
     bodyRightPath.setAttribute("d", `
         M 1000 ${sideStartY}
-        L 1000 ${BODY_VIEWBOX_HEIGHT}
+        L 1000 1000
         L ${rightMeetX} ${sideMeetY}
         Z
     `);
@@ -242,20 +198,13 @@ function drawEnvelopeBody() {
     const tipSideY = 505;
     const verticalStartY = 750;
 
-    /*
-     * Il punto superiore e le diagonali del lembo inferiore
-     * rimangono IDENTICI.
-     *
-     * Cambia soltanto il bordo inferiore:
-     * da y=1000 a y=1400.
-     */
     bodyBottomPath.setAttribute("d", `
-        M 0 ${BODY_VIEWBOX_HEIGHT}
+        M 0 1000
         L 0 ${verticalStartY}
         L ${tipLeftX} ${tipSideY}
         Q 500 ${tipY} ${tipRightX} ${tipSideY}
         L 1000 ${verticalStartY}
-        L 1000 ${BODY_VIEWBOX_HEIGHT}
+        L 1000 1000
         Z
     `);
 
@@ -505,7 +454,7 @@ async function openEnvelope() {
     /*
      * Il tap è avvenuto:
      * da questo momento lo scroll della pagina torna
-     * immediatamente disponibile.
+     * disponibile a livello di html/body.
      */
     document.documentElement.classList.remove(
         "envelope-closed"
@@ -537,6 +486,24 @@ async function openEnvelope() {
         fadePromise
     ]);
 
+    /*
+     * La busta ha terminato visivamente l'apertura.
+     *
+     * Da questo preciso momento il suo overlay non deve
+     * più poter intercettare mouse, trackpad o gesture touch.
+     */
+    envelopeScreen.style.pointerEvents =
+        "none";
+
+    envelopeScreen.style.touchAction =
+        "auto";
+
+    envelopeStage.style.pointerEvents =
+        "none";
+
+    envelopeStage.style.touchAction =
+        "auto";
+
     opening =
         false;
 
@@ -555,13 +522,16 @@ async function openEnvelope() {
         "true"
     );
 
+    /*
+     * Nascondiamo completamente l'overlay.
+     *
+     * IMPORTANTE:
+     * qui NON viene più eseguito window.scrollTo(0, 0).
+     * Se l'utente comincia immediatamente a scorrere,
+     * la sua posizione non viene quindi più sovrascritta.
+     */
     envelopeScreen.hidden =
         true;
-
-    window.scrollTo(
-        0,
-        0
-    );
 
     window.dispatchEvent(
         new CustomEvent(
@@ -576,6 +546,11 @@ async function openEnvelope() {
 ======================================================= */
 
 function initialiseEnvelope() {
+    /*
+     * Questo scrollTo rimane intenzionalmente.
+     * Serve soltanto all'avvio per mostrare sempre
+     * l'invito dalla parte superiore della pagina.
+     */
     window.scrollTo(
         0,
         0
