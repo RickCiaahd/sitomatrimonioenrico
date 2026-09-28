@@ -44,23 +44,104 @@
         .safari-probe[hidden] {
             display: none;
         }
+        #safariDiagnostic {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2147483647;
+            width: 300px;
+            max-width: calc(100vw - 24px);
+            padding: 12px;
+            border: 2px solid #555;
+            border-radius: 10px;
+            background: #FFFFFF;
+            color: #111111;
+            box-shadow: 0 2px 12px #0003;
+            font: 13px/1.5 monospace;
+            pointer-events: none;
+            white-space: pre-line;
+        }
     </style>
 </head>
 <body>
     <!-- CORNICE SAFARI -->
     <div class="safari-probe safari-probe-top" id="safariProbeTop" aria-hidden="true"></div>
     <div class="safari-probe safari-probe-bottom" id="safariProbeBottom" aria-hidden="true"></div>
+
+    <!-- PANNELLO DIAGNOSTICO TEMPORANEO -->
+    <div id="safariDiagnostic" role="status">TEST FASCE A
+Pronto: tocca il sigillo.
+Il pannello non blocca il tocco.</div>
     <script>
-        window.addEventListener("envelopeopening", () => {
-            window.setTimeout(() => {
-                document.getElementById("safariProbeTop").hidden = true;
-document.getElementById("safariProbeBottom").hidden = true;
-            }, 0);
-        }, { once: true });
-        window.addEventListener("envelopeopened", () => {
-            document.getElementById("safariProbeTop").hidden = true;
-            document.getElementById("safariProbeBottom").hidden = true;
-        }, { once: true });
+        (() => {
+            const panel = document.getElementById("safariDiagnostic");
+            const topStrip = document.getElementById("safariProbeTop");
+            const bottomStrip = document.getElementById("safariProbeBottom");
+            let start = null;
+            let hiddenAt = null;
+            let openedAt = null;
+            let interval = null;
+            const seconds = value => (value / 1000).toFixed(2) + " s";
+
+            function stripState(element) {
+                return "hidden=" + element.hidden +
+                    "; display=" + getComputedStyle(element).display;
+            }
+
+            function update() {
+                const elapsed = performance.now() - start;
+                const bothHidden =
+                    getComputedStyle(topStrip).display === "none" &&
+                    getComputedStyle(bottomStrip).display === "none";
+
+                if (bothHidden && hiddenAt === null) {
+                    hiddenAt = elapsed;
+                }
+
+                panel.textContent =
+                    "TEST FASCE A — " + seconds(elapsed) +
+                    "\nEvento iniziale: ricevuto" +
+                    "\nSopra: " + stripState(topStrip) +
+                    "\nSotto: " + stripState(bottomStrip) +
+                    "\nNascoste rilevate a: " +
+                    (hiddenAt === null ? "in attesa" : seconds(hiddenAt)) +
+                    "\nFine busta: " +
+                    (openedAt === null ? "in attesa" : seconds(openedAt));
+
+                panel.style.borderColor =
+                    bothHidden ? "#16803c" : "#c43030";
+
+                if (elapsed >= 8000) {
+                    clearInterval(interval);
+                    panel.textContent += "\nMisurazione terminata.";
+                }
+            }
+
+            window.addEventListener("envelopeopening", () => {
+                start = performance.now();
+                update();
+
+                window.setTimeout(() => {
+                    topStrip.hidden = true;
+                    bottomStrip.hidden = true;
+                    update();
+                }, 0);
+
+                interval = window.setInterval(update, 100);
+            }, { once: true });
+
+            window.addEventListener("envelopeopened", () => {
+                if (start !== null) {
+                    openedAt = performance.now() - start;
+                }
+                topStrip.hidden = true;
+                bottomStrip.hidden = true;
+                if (start !== null) {
+                    update();
+                }
+            }, { once: true });
+        })();
     </script>
 
     <!-- BUSTA -->
