@@ -1117,3 +1117,8 @@
     font-size: 0.85rem;
     text-decoration: underline;
 }
+
+/* LUOGHI: SCELTA DEL NAVIGATORE */
+.place-open { width: 100%; white-space: normal; }
+.ceremony-link { margin-top: 24px; text-align: center; }
+#placeTitle { font-style: italic; }
