@@ -1,12 +1,6 @@
-/* PROVA SAFARI: sfondo carta finché la busta è chiusa. */
-html.envelope-closed {
-    background: var(--paper-front);
-}
+/* PROVA SAFARI: solo sfondo inferiore durante la chiusura. */
 html.envelope-closed body {
     background: var(--paper-bottom);
-}
-html.envelope-closed body::before {
-    visibility: hidden;
 }
 .envelope-screen {
     position: fixed;
