@@ -252,12 +252,12 @@ async function openEnvelope() {
     if (opening || opened) return;
     opening = true;
 
-    // Ripristina lo sfondo del sito 2,30 secondi dopo il click.
+    // Ripristina lo sfondo del sito 2,20 secondi dopo il click.
     window.setTimeout(() => {
         document.documentElement.classList.remove(
             "envelope-paper-background"
         );
-    }, 2300);
+    }, 2200);
 
     window.dispatchEvent(new CustomEvent("envelopeopening"));
     const flapPromise = animateFlap();
