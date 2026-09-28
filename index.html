@@ -173,14 +173,10 @@
                     <span class="section-emoji" aria-hidden="true">💌</span>
                     Ci sarete?
                 </h2>
-                <a
-                    class="button button-primary"
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSfR47MLRdUuwzttRWqgoxmSrlCjPIJb15usxh1CkX8zXxw4Rw/viewform"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <button class="button button-primary" id="rsvpOpen" type="button"
+                        aria-haspopup="dialog" aria-controls="rsvpDialog">
                     Conferma la tua presenza
-                </a>
+                </button>
                 <div class="calendar-trigger">
                     <button
                         class="button button-secondary"
@@ -387,6 +383,20 @@
             </svg>
         </span>
     </div>
+
+    <!-- CONFERMA PRESENZA -->
+    <dialog class="calendar-dialog rsvp-dialog" id="rsvpDialog" aria-labelledby="rsvpTitle">
+        <div class="calendar-paper rsvp-paper">
+            <button class="calendar-close" id="rsvpClose" type="button"
+                    aria-label="Chiudi conferma presenza" autofocus>×</button>
+            <h2 id="rsvpTitle"><em>Ci sarete? 💌</em></h2>
+            <iframe id="rsvpFrame" class="rsvp-frame"
+                    title="Modulo per confermare la presenza al matrimonio"
+                    data-src="https://docs.google.com/forms/d/e/1FAIpQLSfR47MLRdUuwzttRWqgoxmSrlCjPIJb15usxh1CkX8zXxw4Rw/viewform?embedded=true"></iframe>
+            <a class="rsvp-external" href="https://docs.google.com/forms/d/e/1FAIpQLSfR47MLRdUuwzttRWqgoxmSrlCjPIJb15usxh1CkX8zXxw4Rw/viewform"
+               target="_blank" rel="noopener noreferrer">Se il modulo non si carica, aprilo qui</a>
+        </div>
+    </dialog>
 
     <!-- COORDINATE BANCARIE -->
     <dialog class="calendar-dialog gift-dialog" id="giftDialog" aria-labelledby="giftTitle">
