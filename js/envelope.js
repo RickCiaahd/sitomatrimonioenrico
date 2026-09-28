@@ -23,12 +23,6 @@ const BODY_DURATION = 1450;
 const FLAP_FADE_DURATION = 280;
 const SCROLL_UNLOCK_PROGRESS = 0.65;
 
-// Estensioni nelle coordinate SVG, senza cambiare il viewBox.
-// Sopra: 24% dell'altezza della patta, equivalente a 12vh.
-// Sotto: 12% dell'altezza del corpo della busta.
-const FLAP_TOP_EXTENSION = 240;
-const BODY_BOTTOM_EXTENSION = 120;
-
 let flapFrameId = null;
 let bodyFrameId = null;
 let fadeFrameId = null;
@@ -63,8 +57,6 @@ function wait(milliseconds) {
 function unlockPageScroll() {
     if (scrollUnlocked) return;
     scrollUnlocked = true;
-
-    // Lascia passare i nuovi gesti mentre termina l'animazione.
     envelopeScreen.style.pointerEvents = "none";
     envelopeScreen.style.touchAction = "auto";
     envelopeStage.style.pointerEvents = "none";
@@ -91,8 +83,8 @@ function getFlapGeometry(t) {
     const leftControl2X = 375 + 10 * bend;
     const leftControl2Y = rightControl2Y;
     const d = `
-        M 0 ${-FLAP_TOP_EXTENSION}
-        L 1000 ${-FLAP_TOP_EXTENSION}
+        M 0 0
+        L 1000 0
         L 1000 ${shoulderY - 30}
         Q 1000 ${shoulderY} ${rightShoulderX} ${shoulderY}
         C ${rightControl1X} ${rightControl1Y},
@@ -103,7 +95,7 @@ function getFlapGeometry(t) {
           ${leftControl1X} ${leftControl1Y},
           ${leftShoulderX} ${shoulderY}
         Q 0 ${shoulderY} 0 ${shoulderY - 30}
-        L 0 ${-FLAP_TOP_EXTENSION}
+        L 0 0
         Z
     `;
     return { d, tipY, bend };
@@ -115,7 +107,6 @@ function drawEnvelopeBody() {
     const sideMeetY = 500;
     const leftMeetX = 492;
     const rightMeetX = 508;
-
     bodyLeftPath.setAttribute("d", `
         M 0 ${sideStartY}
         L ${leftMeetX} ${sideMeetY}
@@ -136,20 +127,18 @@ function drawEnvelopeBody() {
         M 1000 ${sideStartY}
         L ${rightMeetX} ${sideMeetY}
     `);
-
     const tipY = 490;
     const tipLeftX = 468;
     const tipRightX = 532;
     const tipSideY = 505;
     const verticalStartY = 750;
-
     bodyBottomPath.setAttribute("d", `
-        M 0 ${1000 + BODY_BOTTOM_EXTENSION}
+        M 0 1000
         L 0 ${verticalStartY}
         L ${tipLeftX} ${tipSideY}
         Q 500 ${tipY} ${tipRightX} ${tipSideY}
         L 1000 ${verticalStartY}
-        L 1000 ${1000 + BODY_BOTTOM_EXTENSION}
+        L 1000 1000
         Z
     `);
     bodyBottomFold.setAttribute("d", `
@@ -160,35 +149,18 @@ function drawEnvelopeBody() {
     `);
 }
 
-/* SFUMATURE DELLA CARTA */
-function preservePaperGradients(tipY) {
-    // Mantiene le sfumature sulla parte originale della patta.
-    // L'estensione superiore assume il colore iniziale del gradiente.
-    for (const id of ["paperFront", "paperBack"]) {
-        const gradient = $(id);
-        gradient.setAttribute("gradientUnits", "userSpaceOnUse");
-        gradient.setAttribute("x1", "0");
-        gradient.setAttribute("y1", "0");
-        gradient.setAttribute("x2", "0");
-        gradient.setAttribute("y2", String(tipY - 7.5));
-    }
-}
-
 /* DISEGNO DEL LEMBO DURANTE L'ANIMAZIONE */
 function drawFlapFrame(progress) {
     const t = clamp(progress, 0, 1);
     const geometry = getFlapGeometry(t);
-    preservePaperGradients(geometry.tipY);
     const bend = geometry.bend;
     let rotation;
-
     if (t < 0.94) {
         rotation = 181.5 * easeInOutCubic(t / 0.94);
     } else {
         const settle = (t - 0.94) / 0.06;
         rotation = 181.5 - 1.5 * easeOutCubic(settle);
     }
-
     const depth = 20 * bend;
     flap.style.transform =
         `rotateX(${rotation}deg) translateZ(${depth}px)`;
@@ -198,18 +170,15 @@ function drawFlapFrame(progress) {
         "fill",
         rotation < 90 ? "url(#paperFront)" : "url(#paperBack)"
     );
-
     waxSeal.style.left = "50%";
     waxSeal.style.top = `${geometry.tipY / 10}%`;
     waxSeal.style.visibility = rotation < 90 ? "visible" : "hidden";
-
     flapShadow.style.opacity = `${0.23 * bend}`;
     flapShadow.style.transform = `
         translate(-50%, ${-50 + 17 * t}%)
         scaleX(${0.93 - 0.15 * bend})
         scaleY(${0.08 + 0.74 * bend})
     `;
-
     const shade = Math.round(8 * bend);
     frontStop1.setAttribute(
         "stop-color",
@@ -229,7 +198,6 @@ function drawFlapFrame(progress) {
 function animate(duration, draw, setFrameId) {
     return new Promise(resolve => {
         const start = performance.now();
-
         function frame(now) {
             const progress = clamp((now - start) / duration, 0, 1);
             draw(progress);
@@ -240,7 +208,6 @@ function animate(duration, draw, setFrameId) {
                 resolve();
             }
         }
-
         setFrameId(requestAnimationFrame(frame));
     });
 }
@@ -290,14 +257,12 @@ async function openEnvelope() {
     if (opening || opened) return;
     opening = true;
     window.dispatchEvent(new CustomEvent("envelopeopening"));
-
     const flapPromise = animateFlap();
     await wait(BODY_START);
     const bodyPromise = animateEnvelopeDown();
     await flapPromise;
     const fadePromise = fadeOutFlap();
     await Promise.all([bodyPromise, fadePromise]);
-
     unlockPageScroll();
     opening = false;
     opened = true;
@@ -317,9 +282,7 @@ function initialiseEnvelope() {
     window.scrollTo(0, 0);
     document.documentElement.classList.add("envelope-closed");
     drawEnvelopeBody();
-
     const initialGeometry = getFlapGeometry(0);
-    preservePaperGradients(initialGeometry.tipY);
     flapPath.setAttribute("d", initialGeometry.d);
     flapEdgePath.setAttribute("d", initialGeometry.d);
     flapPath.setAttribute("fill", "url(#paperFront)");
