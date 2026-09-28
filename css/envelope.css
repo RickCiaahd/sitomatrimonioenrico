@@ -1,6 +1,16 @@
-/* Sfondo carta soltanto prima dell'apertura. */
+/* PROVA SAFARI: carta soltanto nella metà inferiore. */
 html.envelope-paper-background body {
-    background: var(--paper-bottom);
+    background-color: transparent;
+    background-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 50%,
+        var(--paper-bottom) 50%,
+        var(--paper-bottom) 100%
+    );
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% 100vh;
 }
 .envelope-screen {
     position: fixed;
