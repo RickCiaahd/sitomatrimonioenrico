@@ -35,6 +35,8 @@ let fadeFrameId = null;
 let opening = false;
 let opened = false;
 let scrollUnlocked = false;
+let currentFlapRotation = 0;
+let envelopeContainerHidden = false;
 
 window.envelopeState = {
     opened: false
@@ -67,6 +69,29 @@ function wait(milliseconds) {
     return new Promise(resolve => {
         setTimeout(resolve, milliseconds);
     });
+}
+
+function hideEnvelopeContainer() {
+    if (envelopeContainerHidden) return;
+
+    envelopeContainerHidden = true;
+    envelopeScreen.hidden = true;
+    envelopeScreen.style.display = "none";
+    envelopeScreen.setAttribute("aria-hidden", "true");
+
+    unlockPageScroll();
+}
+
+function hideEnvelopeIfOutside() {
+    if (envelopeContainerHidden || currentFlapRotation < 150) return;
+
+    const screenBottom = envelopeScreen.getBoundingClientRect().bottom;
+    const bodyTop = envelopeBody.getBoundingClientRect().top;
+
+    // Margine per evitare residui sul bordo inferiore.
+    if (bodyTop >= screenBottom + 4) {
+        hideEnvelopeContainer();
+    }
 }
 
 function unlockPageScroll() {
@@ -194,6 +219,8 @@ function drawFlapFrame(progress) {
         rotation = 181.5 - 1.5 * easeOutCubic(settle);
     }
 
+    currentFlapRotation = rotation;
+
     const depth = 20 * bend;
 
     flap.style.transform = `
@@ -285,6 +312,8 @@ function animateEnvelopeDown() {
 
             envelopeBody.style.transform = `translateY(${112 * e}vh)`;
 
+            hideEnvelopeIfOutside();
+
             if (progress >= SCROLL_UNLOCK_PROGRESS) {
                 unlockPageScroll();
             }
@@ -330,15 +359,7 @@ async function openEnvelope() {
 
     await wait(BODY_START);
 
-    const bodyPromise = animateEnvelopeDown().then(() => {
-        // Prova Safari: nasconde il contenitore appena termina
-        // la discesa del corpo, circa 3,05 secondi dal click.
-        envelopeScreen.hidden = true;
-        envelopeScreen.style.display = "none";
-        envelopeScreen.setAttribute("aria-hidden", "true");
-
-        unlockPageScroll();
-    });
+    const bodyPromise = animateEnvelopeDown().then(hideEnvelopeContainer);
 
     await flapPromise;
 
