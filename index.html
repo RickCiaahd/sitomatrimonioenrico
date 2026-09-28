@@ -19,13 +19,13 @@
     <link rel="stylesheet" href="css/hero.css">
     <link rel="stylesheet" href="css/sections.css">
     <link rel="stylesheet" href="css/scroll.css">
-    <!-- Test temporaneo: strisce interne ai bordi, dietro la busta. -->
+    <!-- Test temporaneo: strisce da 1 px sui bordi, dietro la busta. -->
     <style>
         .safari-probe {
             position: fixed;
             left: 0;
             right: 0;
-            height: 120px;
+            height: 1px;
             z-index: 999;
             pointer-events: none;
         }
@@ -44,16 +44,8 @@
 </head>
 <body>
     <!-- SONDE SAFARI: ESTERNE AL CONTENITORE DELLA BUSTA -->
-    <div
-        class="safari-probe safari-probe-top"
-        id="safariProbeTop"
-        aria-hidden="true"
-    ></div>
-    <div
-        class="safari-probe safari-probe-bottom"
-        id="safariProbeBottom"
-        aria-hidden="true"
-    ></div>
+    <div class="safari-probe safari-probe-top" id="safariProbeTop" aria-hidden="true"></div>
+    <div class="safari-probe safari-probe-bottom" id="safariProbeBottom" aria-hidden="true"></div>
     <script>
         window.addEventListener("envelopeopened", () => {
             document.getElementById("safariProbeTop").hidden = true;
@@ -103,13 +95,7 @@
                             <stop offset="0%" stop-color="#E4D3BC"></stop>
                             <stop offset="100%" stop-color="#D8C2A6"></stop>
                         </linearGradient>
-                        <filter
-                            id="paperShadow"
-                            x="-20%"
-                            y="-20%"
-                            width="140%"
-                            height="160%"
-                        >
+                        <filter id="paperShadow" x="-20%" y="-20%" width="140%" height="160%">
                             <feDropShadow
                                 dx="0"
                                 dy="7"
@@ -212,12 +198,7 @@
         <section class="section section-alt" id="luoghi">
             <div class="section-inner">
                 <h2 class="section-title">
-                    <img
-                        class="section-title-image"
-                        src="images/pin.png"
-                        alt=""
-                        draggable="false"
-                    >
+                    <img class="section-title-image" src="images/pin.png" alt="" draggable="false">
                     I luoghi della giornata
                 </h2>
                 <div class="places-grid">
