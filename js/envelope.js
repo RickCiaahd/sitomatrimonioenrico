@@ -38,6 +38,7 @@ let opened = false;
 let scrollUnlocked = false;
 let currentFlapRotation = 0;
 let envelopeContainerHidden = false;
+let containerFadePromise = null;
 
 window.envelopeState = {
     opened: false
@@ -85,16 +86,36 @@ function wait(milliseconds) {
 }
 
 function hideEnvelopeContainer() {
-    if (envelopeContainerHidden) return;
-    envelopeContainerHidden = true;
-    envelopeScreen.hidden = true;
-    envelopeScreen.style.display = "none";
-    envelopeScreen.setAttribute("aria-hidden", "true");
+    if (containerFadePromise) return containerFadePromise;
+    if (envelopeContainerHidden) return Promise.resolve();
+
     unlockPageScroll();
+    const duration = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? 0 : 300;
+
+    containerFadePromise = new Promise(resolve => {
+        const start = performance.now();
+        function frame(now) {
+            const progress = duration === 0
+                ? 1 : clamp((now - start) / duration, 0, 1);
+            envelopeScreen.style.opacity = String(1 - progress);
+            if (progress < 1) {
+                requestAnimationFrame(frame);
+                return;
+            }
+            envelopeContainerHidden = true;
+            envelopeScreen.hidden = true;
+            envelopeScreen.style.display = "none";
+            envelopeScreen.setAttribute("aria-hidden", "true");
+            resolve();
+        }
+        requestAnimationFrame(frame);
+    });
+    return containerFadePromise;
 }
 
 function hideEnvelopeIfOutside() {
-    if (envelopeContainerHidden || currentFlapRotation < 150) return;
+    if (envelopeContainerHidden || containerFadePromise || currentFlapRotation < 150) return;
     const screenBottom = envelopeScreen.getBoundingClientRect().bottom;
     const bodyTop = Math.min(
         bodyLeftPath.getBoundingClientRect().top,
