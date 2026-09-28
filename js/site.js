@@ -400,3 +400,37 @@ if (
         window.setTimeout(() => URL.revokeObjectURL(url), 60000);
     });
 })();
+
+/* CONFERMA PRESENZA */
+(() => {
+    const button = document.getElementById("rsvpOpen");
+    const dialog = document.getElementById("rsvpDialog");
+    const close = document.getElementById("rsvpClose");
+    const frame = document.getElementById("rsvpFrame");
+    if (!button || !dialog || !close || !frame) return;
+    let previousFocus = null;
+    let pointerStartedOutside = false;
+    button.addEventListener("click", () => {
+        if (dialog.open) return;
+        previousFocus = document.activeElement;
+        if (!frame.hasAttribute("src")) frame.src = frame.dataset.src;
+        dialog.showModal();
+    });
+    close.addEventListener("click", () => dialog.close());
+    function isOutside(event) {
+        const rect = dialog.getBoundingClientRect();
+        return event.clientX < rect.left || event.clientX > rect.right ||
+            event.clientY < rect.top || event.clientY > rect.bottom;
+    }
+    dialog.addEventListener("pointerdown", event => {
+        pointerStartedOutside = event.target === dialog && isOutside(event);
+    });
+    dialog.addEventListener("click", event => {
+        if (pointerStartedOutside && event.target === dialog && isOutside(event)) dialog.close();
+        pointerStartedOutside = false;
+    });
+    dialog.addEventListener("close", () => {
+        pointerStartedOutside = false;
+        if (previousFocus && previousFocus.isConnected) previousFocus.focus({ preventScroll: true });
+    });
+})();
