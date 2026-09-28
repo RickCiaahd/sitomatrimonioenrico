@@ -233,8 +233,9 @@ function animateEnvelopeDown() {
     );
 }
 
-/* DISSOLVENZA DEL LEMBO */
+/* DISSOLVENZA DEL LEMBO E DELLA CORNICE */
 function fadeOutFlap() {
+    window.dispatchEvent(new CustomEvent("envelopefading"));
     return animate(
         FLAP_FADE_DURATION,
         progress => {
