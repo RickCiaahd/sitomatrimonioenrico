@@ -1090,7 +1090,18 @@
     width: min(720px, calc(100% - 16px));
 }
 .rsvp-paper {
-    padding: 56px clamp(10px, 3vw, 28px) 24px;
+    padding: 56px 0 18px;
+    background: #fff;
+}
+.rsvp-dialog[open] {
+    animation: rsvp-appear 400ms cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes rsvp-appear {
+    from { transform: scale(0.30); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .rsvp-dialog[open] { animation: none; }
 }
 .rsvp-frame {
     display: block;
