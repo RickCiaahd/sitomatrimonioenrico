@@ -1,8 +1,18 @@
+/* PROVA SAFARI: sfondo carta finché la busta è chiusa. */
+html.envelope-closed {
+    background: var(--paper-front);
+}
+html.envelope-closed body {
+    background: var(--paper-bottom);
+}
+html.envelope-closed body::before {
+    visibility: hidden;
+}
 .envelope-screen {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    overflow: visible;
+    overflow: hidden;
     pointer-events: auto;
     touch-action: none;
 }
