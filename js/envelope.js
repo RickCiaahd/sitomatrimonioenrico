@@ -44,10 +44,7 @@ function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
 }
 function bendCurve(t) {
-    return Math.pow(
-        Math.max(0, Math.sin(Math.PI * t)),
-        0.72
-    );
+    return Math.pow(Math.max(0, Math.sin(Math.PI * t)), 0.72);
 }
 function wait(milliseconds) {
     return new Promise(resolve => {
@@ -256,6 +253,12 @@ function fadeOutFlap() {
 async function openEnvelope() {
     if (opening || opened) return;
     opening = true;
+
+    // Ripristina subito lo sfondo del sito, prima del movimento.
+    document.documentElement.classList.remove(
+        "envelope-paper-background"
+    );
+
     window.dispatchEvent(new CustomEvent("envelopeopening"));
     const flapPromise = animateFlap();
     await wait(BODY_START);
@@ -281,6 +284,9 @@ async function openEnvelope() {
 function initialiseEnvelope() {
     window.scrollTo(0, 0);
     document.documentElement.classList.add("envelope-closed");
+    document.documentElement.classList.add(
+        "envelope-paper-background"
+    );
     drawEnvelopeBody();
     const initialGeometry = getFlapGeometry(0);
     flapPath.setAttribute("d", initialGeometry.d);
