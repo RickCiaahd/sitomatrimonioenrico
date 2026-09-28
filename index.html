@@ -362,29 +362,13 @@
                     class="button"
                     id="giftToggle"
                     type="button"
-                    aria-expanded="false"
-                    aria-controls="giftDetails"
+                    aria-haspopup="dialog"
+                    aria-controls="giftDialog"
                 >
                     <span aria-hidden="true">💝</span>
                     Scopri di più
                 </button>
-                <div class="gift-details" id="giftDetails" hidden>
-                    <div class="gift-row">
-                        <span>Intestatario</span>
-                        <strong>Enrico Forte</strong>
-                    </div>
-                    <div class="gift-row gift-iban">
-                        <span>IBAN</span>
-                        <strong id="ibanCode">IT95D0367401600000878189011</strong>
-                    </div>
-                    <button class="copy-button" id="copyIban" type="button">
-                        Copia IBAN
-                    </button>
-                    <div class="gift-row">
-                        <span>BIC / SWIFT</span>
-                        <strong>TRBKITMMXXX</strong>
-                    </div>
-                </div>
+
             </div>
         </section>
 
@@ -403,6 +387,32 @@
             </svg>
         </span>
     </div>
+
+    <!-- COORDINATE BANCARIE -->
+    <dialog class="calendar-dialog gift-dialog" id="giftDialog" aria-labelledby="giftTitle">
+        <div class="calendar-paper">
+            <button class="calendar-close" id="giftClose" type="button"
+                    aria-label="Chiudi coordinate bancarie" autofocus>×</button>
+            <h2 id="giftTitle"><em>Il nostro sogno ❤️</em></h2>
+                <div class="gift-details" id="giftDetails">
+                    <div class="gift-row">
+                        <span>Intestatario</span>
+                        <strong>Enrico Forte</strong>
+                    </div>
+                    <div class="gift-row gift-iban">
+                        <span>IBAN</span>
+                        <strong id="ibanCode">IT95D0367401600000878189011</strong>
+                    </div>
+                    <button class="copy-button" id="copyIban" type="button">
+                        Copia IBAN
+                    </button>
+                    <div class="gift-row">
+                        <span>BIC / SWIFT</span>
+                        <strong>TRBKITMMXXX</strong>
+                    </div>
+                </div>
+        </div>
+    </dialog>
 
     <!-- CALENDARIO -->
     <dialog
