@@ -434,3 +434,43 @@ if (
         if (previousFocus && previousFocus.isConnected) previousFocus.focus({ preventScroll: true });
     });
 })();
+
+/* LUOGHI DELLA GIORNATA */
+(() => {
+    const dialog = document.getElementById("placeDialog");
+    const close = document.getElementById("placeClose");
+    if (!dialog || !close) return;
+    let previousFocus = null;
+    let pointerStartedOutside = false;
+    document.querySelectorAll(".place-open").forEach(button => {
+        button.addEventListener("click", () => {
+            if (dialog.open) return;
+            previousFocus = button;
+            document.getElementById("placeTitle").textContent = button.dataset.placeTitle;
+            document.getElementById("placeGoogle").href = button.dataset.google;
+            document.getElementById("placeWaze").href = button.dataset.waze;
+            const apple = new URL("https://maps.apple.com/");
+            apple.searchParams.set("daddr", button.dataset.coordinates);
+            apple.searchParams.set("dirflg", "d");
+            document.getElementById("placeApple").href = apple.href;
+            dialog.showModal();
+        });
+    });
+    close.addEventListener("click", () => dialog.close());
+    function isOutside(event) {
+        const rect = dialog.getBoundingClientRect();
+        return event.clientX < rect.left || event.clientX > rect.right ||
+            event.clientY < rect.top || event.clientY > rect.bottom;
+    }
+    dialog.addEventListener("pointerdown", event => {
+        pointerStartedOutside = event.target === dialog && isOutside(event);
+    });
+    dialog.addEventListener("click", event => {
+        if (pointerStartedOutside && event.target === dialog && isOutside(event)) dialog.close();
+        pointerStartedOutside = false;
+    });
+    dialog.addEventListener("close", () => {
+        pointerStartedOutside = false;
+        if (previousFocus && previousFocus.isConnected) previousFocus.focus({ preventScroll: true });
+    });
+})();
