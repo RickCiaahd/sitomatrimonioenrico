@@ -2,44 +2,68 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <link
-        rel="preload"
-        href="images/sigillo-AE.png"
-        as="image"
-        fetchpriority="high"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="images/sigillo-AE.png" as="image" fetchpriority="high">
     <script>
         if ("scrollRestoration" in history) {
             history.scrollRestoration = "manual";
         }
-
         window.scrollTo(0, 0);
     </script>
-
     <title>Enrico & Annachiara | 12 giugno 2027</title>
-
     <link rel="preload" href="images/ritratto.png" as="image">
     <link rel="preload" href="images/cartoncino.png" as="image">
     <link rel="preload" href="images/carta-moduli.png" as="image">
-
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/envelope.css">
     <link rel="stylesheet" href="css/hero.css">
     <link rel="stylesheet" href="css/sections.css">
     <link rel="stylesheet" href="css/scroll.css">
+    <!-- Test temporaneo: strisce esterne ai bordi della finestra. -->
+    <style>
+        .safari-probe {
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 120px;
+            z-index: 999;
+            pointer-events: none;
+        }
+        .safari-probe-top {
+            top: 0;
+            background: #0066FF;
+            transform: translateY(-100%);
+        }
+        .safari-probe-bottom {
+            bottom: 0;
+            background: #FF0000;
+            transform: translateY(100%);
+        }
+        .safari-probe[hidden] {
+            display: none;
+        }
+    </style>
 </head>
-
 <body>
+    <!-- SONDE SAFARI: ESTERNE ALLA BUSTA -->
+    <div
+        class="safari-probe safari-probe-top"
+        id="safariProbeTop"
+        aria-hidden="true"
+    ></div>
+    <div
+        class="safari-probe safari-probe-bottom"
+        id="safariProbeBottom"
+        aria-hidden="true"
+    ></div>
+    <script>
+        window.addEventListener("envelopeopened", () => {
+            document.getElementById("safariProbeTop").hidden = true;
+            document.getElementById("safariProbeBottom").hidden = true;
+        }, { once: true });
+    </script>
 
     <!-- BUSTA -->
-
     <div class="envelope-screen" id="envelopeScreen">
         <div
             class="envelope-stage"
@@ -63,9 +87,7 @@
                     <path class="body-bottom-fold" id="bodyBottomFold"></path>
                 </svg>
             </div>
-
             <div class="flap-shadow" id="flapShadow"></div>
-
             <div class="envelope-flap" id="flap">
                 <svg
                     class="flap-svg"
@@ -74,50 +96,15 @@
                     aria-hidden="true"
                 >
                     <defs>
-                        <linearGradient
-                            id="paperFront"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                        >
-                            <stop
-                                id="frontStop1"
-                                offset="0%"
-                                stop-color="#EADCC8"
-                            ></stop>
-
-                            <stop
-                                id="frontStop2"
-                                offset="58%"
-                                stop-color="#EADCC8"
-                            ></stop>
-
-                            <stop
-                                id="frontStop3"
-                                offset="100%"
-                                stop-color="#DEC8AD"
-                            ></stop>
+                        <linearGradient id="paperFront" x1="0" y1="0" x2="0" y2="1">
+                            <stop id="frontStop1" offset="0%" stop-color="#EADCC8"></stop>
+                            <stop id="frontStop2" offset="58%" stop-color="#EADCC8"></stop>
+                            <stop id="frontStop3" offset="100%" stop-color="#DEC8AD"></stop>
                         </linearGradient>
-
-                        <linearGradient
-                            id="paperBack"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                        >
-                            <stop
-                                offset="0%"
-                                stop-color="#E4D3BC"
-                            ></stop>
-
-                            <stop
-                                offset="100%"
-                                stop-color="#D8C2A6"
-                            ></stop>
+                        <linearGradient id="paperBack" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#E4D3BC"></stop>
+                            <stop offset="100%" stop-color="#D8C2A6"></stop>
                         </linearGradient>
-
                         <filter
                             id="paperShadow"
                             x="-20%"
@@ -134,11 +121,9 @@
                             ></feDropShadow>
                         </filter>
                     </defs>
-
                     <path class="flap-paper" id="flapPath"></path>
                     <path class="flap-edge" id="flapEdgePath"></path>
                 </svg>
-
                 <div class="wax-seal" id="waxSeal">
                     <img
                         src="images/sigillo-AE.png"
@@ -153,11 +138,8 @@
     </div>
 
     <!-- SITO -->
-
     <main class="site" id="site">
-
         <!-- HERO -->
-
         <section class="hero" id="hero">
             <div class="hero-content">
                 <img
@@ -166,13 +148,8 @@
                     alt="Enrico e Annachiara"
                     draggable="false"
                 >
-
                 <h1>Enrico &amp; Annachiara</h1>
-
-                <p class="hero-date">
-                    12 giugno 2027
-                </p>
-
+                <p class="hero-date">12 giugno 2027</p>
                 <div class="countdown-paper" id="countdown">
                     <img
                         class="countdown-paper-image"
@@ -180,24 +157,20 @@
                         alt=""
                         draggable="false"
                     >
-
                     <div class="countdown-paper-content">
                         <div class="countdown-grid">
                             <div class="countdown-item">
                                 <strong id="countdownDays">000</strong>
                                 <span>Giorni</span>
                             </div>
-
                             <div class="countdown-item">
                                 <strong id="countdownHours">00</strong>
                                 <span>Ore</span>
                             </div>
-
                             <div class="countdown-item">
                                 <strong id="countdownMinutes">00</strong>
                                 <span>Minuti</span>
                             </div>
-
                             <div class="countdown-item">
                                 <strong id="countdownSeconds">00</strong>
                                 <span>Secondi</span>
@@ -209,14 +182,12 @@
         </section>
 
         <!-- RSVP -->
-
         <section class="section" id="rsvp">
             <div class="section-inner">
                 <h2 class="section-title">
                     <span class="section-emoji" aria-hidden="true">💌</span>
                     Ci sarete?
                 </h2>
-
                 <a
                     class="button button-primary"
                     href="https://docs.google.com/forms/d/e/1FAIpQLSfR47MLRdUuwzttRWqgoxmSrlCjPIJb15usxh1CkX8zXxw4Rw/viewform"
@@ -225,7 +196,6 @@
                 >
                     Conferma la tua presenza
                 </a>
-
                 <div class="calendar-trigger">
                     <button
                         class="button button-secondary"
@@ -241,7 +211,6 @@
         </section>
 
         <!-- LUOGHI -->
-
         <section class="section section-alt" id="luoghi">
             <div class="section-inner">
                 <h2 class="section-title">
@@ -253,15 +222,12 @@
                     >
                     I luoghi della giornata
                 </h2>
-
                 <div class="places-grid">
-
                     <article class="place-card">
                         <h3>
                             <span aria-hidden="true">🏠</span>
                             Casa dello sposo
                         </h3>
-
                         <div class="navigation-buttons">
                             <a
                                 class="button button-small map-button"
@@ -269,38 +235,25 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img
-                                    class="navigation-logo"
-                                    src="images/maps.png"
-                                    alt=""
-                                    draggable="false"
-                                >
+                                <img class="navigation-logo" src="images/maps.png" alt="" draggable="false">
                                 Maps
                             </a>
-
                             <a
                                 class="button button-small map-button"
                                 href="https://waze.com/ul?ll=40.608131%2C14.978180&navigate=yes"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img
-                                    class="navigation-logo"
-                                    src="images/waze.png"
-                                    alt=""
-                                    draggable="false"
-                                >
+                                <img class="navigation-logo" src="images/waze.png" alt="" draggable="false">
                                 Waze
                             </a>
                         </div>
                     </article>
-
                     <article class="place-card">
                         <h3>
                             <span aria-hidden="true">🏠</span>
                             Casa della sposa
                         </h3>
-
                         <div class="navigation-buttons">
                             <a
                                 class="button button-small map-button"
@@ -308,38 +261,25 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img
-                                    class="navigation-logo"
-                                    src="images/maps.png"
-                                    alt=""
-                                    draggable="false"
-                                >
+                                <img class="navigation-logo" src="images/maps.png" alt="" draggable="false">
                                 Maps
                             </a>
-
                             <a
                                 class="button button-small map-button"
                                 href="https://waze.com/ul?ll=40.739052%2C14.755519&navigate=yes"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img
-                                    class="navigation-logo"
-                                    src="images/waze.png"
-                                    alt=""
-                                    draggable="false"
-                                >
+                                <img class="navigation-logo" src="images/waze.png" alt="" draggable="false">
                                 Waze
                             </a>
                         </div>
                     </article>
-
                     <article class="place-card">
                         <h3>
                             <span aria-hidden="true">⛪</span>
                             Chiesa di San Martino Vescovo
                         </h3>
-
                         <div class="navigation-buttons">
                             <a
                                 class="button button-small map-button"
@@ -347,31 +287,19 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img
-                                    class="navigation-logo"
-                                    src="images/maps.png"
-                                    alt=""
-                                    draggable="false"
-                                >
+                                <img class="navigation-logo" src="images/maps.png" alt="" draggable="false">
                                 Maps
                             </a>
-
                             <a
                                 class="button button-small map-button"
                                 href="https://waze.com/ul?ll=40.761874%2C14.785191&navigate=yes"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img
-                                    class="navigation-logo"
-                                    src="images/waze.png"
-                                    alt=""
-                                    draggable="false"
-                                >
+                                <img class="navigation-logo" src="images/waze.png" alt="" draggable="false">
                                 Waze
                             </a>
                         </div>
-
                         <a
                             class="button ceremony-button"
                             href="documenti/libretto-messa.pdf"
@@ -381,13 +309,11 @@
                             📖 Segui con noi la cerimonia
                         </a>
                     </article>
-
                     <article class="place-card">
                         <h3>
                             <span aria-hidden="true">🥂</span>
                             Masseria La Morella
                         </h3>
-
                         <div class="navigation-buttons">
                             <a
                                 class="button button-small map-button"
@@ -395,45 +321,31 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img
-                                    class="navigation-logo"
-                                    src="images/maps.png"
-                                    alt=""
-                                    draggable="false"
-                                >
+                                <img class="navigation-logo" src="images/maps.png" alt="" draggable="false">
                                 Maps
                             </a>
-
                             <a
                                 class="button button-small map-button"
                                 href="https://waze.com/ul?ll=40.610224%2C14.942694&navigate=yes"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img
-                                    class="navigation-logo"
-                                    src="images/waze.png"
-                                    alt=""
-                                    draggable="false"
-                                >
+                                <img class="navigation-logo" src="images/waze.png" alt="" draggable="false">
                                 Waze
                             </a>
                         </div>
                     </article>
-
                 </div>
             </div>
         </section>
 
         <!-- ALBUM -->
-
         <section class="section" id="album">
             <div class="section-inner">
                 <h2 class="section-title">
                     <span class="section-emoji" aria-hidden="true">📸</span>
                     Condividi con noi le foto del nostro giorno
                 </h2>
-
                 <div class="album-card">
                     <a
                         class="button button-primary"
@@ -443,19 +355,10 @@
                     >
                         Apri WedShoots
                     </a>
-
                     <div class="access-code">
                         <span class="access-code-label">Codice album</span>
-
-                        <strong id="wedshootsCode">
-                            ITb2ea31c8
-                        </strong>
-
-                        <button
-                            class="copy-button"
-                            id="copyWedshootsCode"
-                            type="button"
-                        >
+                        <strong id="wedshootsCode">ITb2ea31c8</strong>
+                        <button class="copy-button" id="copyWedshootsCode" type="button">
                             Copia
                         </button>
                     </div>
@@ -464,20 +367,17 @@
         </section>
 
         <!-- IL NOSTRO SOGNO -->
-
         <section class="section section-alt" id="sogno">
             <div class="section-inner">
                 <h2 class="section-title">
                     <span class="section-emoji" aria-hidden="true">❤️</span>
                     Il nostro sogno
                 </h2>
-
                 <p class="section-text">
                     Il nostro desiderio più grande è avervi con noi
                     nel nostro giorno. Se desideri contribuire alla
                     realizzazione del nostro sogno, clicca qui
                 </p>
-
                 <button
                     class="button"
                     id="giftToggle"
@@ -488,28 +388,18 @@
                     <span aria-hidden="true">💝</span>
                     Scopri di più
                 </button>
-
                 <div class="gift-details" id="giftDetails" hidden>
                     <div class="gift-row">
                         <span>Intestatario</span>
                         <strong>Enrico Forte</strong>
                     </div>
-
                     <div class="gift-row gift-iban">
                         <span>IBAN</span>
-                        <strong id="ibanCode">
-                            IT95D0367401600000878189011
-                        </strong>
+                        <strong id="ibanCode">IT95D0367401600000878189011</strong>
                     </div>
-
-                    <button
-                        class="copy-button"
-                        id="copyIban"
-                        type="button"
-                    >
+                    <button class="copy-button" id="copyIban" type="button">
                         Copia IBAN
                     </button>
-
                     <div class="gift-row">
                         <span>BIC / SWIFT</span>
                         <strong>TRBKITMMXXX</strong>
@@ -519,25 +409,14 @@
         </section>
 
         <!-- FIAT 500 -->
-
         <div class="footer-500" aria-hidden="true">
-            <img
-                src="images/500.png"
-                alt=""
-                draggable="false"
-            >
+            <img src="images/500.png" alt="" draggable="false">
         </div>
     </main>
 
     <!-- INDICATORE SCROLL -->
-
-    <div
-        class="scroll-indicator"
-        id="scrollIndicator"
-        aria-hidden="true"
-    >
+    <div class="scroll-indicator" id="scrollIndicator" aria-hidden="true">
         <span class="scroll-label">Scorri</span>
-
         <span class="scroll-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 24" focusable="false">
                 <path d="M12 4.5V18.5M6.5 13L12 18.5L17.5 13"></path>
@@ -546,7 +425,6 @@
     </div>
 
     <!-- CALENDARIO -->
-
     <dialog
         class="calendar-dialog"
         id="calendarDialog"
@@ -561,13 +439,10 @@
                 aria-label="Chiudi calendario"
                 autofocus
             >×</button>
-
             <h2 id="calendarTitle">
                 <em>Matrimonio Enrico &amp; Annachiara ❤️</em>
             </h2>
-
             <p id="calendarDate">12 giugno 2027</p>
-
             <div class="calendar-actions">
                 <a
                     class="button button-secondary"
@@ -577,7 +452,6 @@
                 >
                     Google Calendar
                 </a>
-
                 <button
                     class="button button-secondary"
                     id="calendarApple"
@@ -585,7 +459,6 @@
                 >
                     Apple Calendar
                 </button>
-
                 <a
                     class="button button-secondary"
                     id="calendarOutlook"
@@ -599,11 +472,9 @@
     </dialog>
 
     <!-- SCRIPT -->
-
     <script src="js/envelope.js"></script>
     <script src="js/countdown.js"></script>
     <script src="js/site.js"></script>
     <script src="js/hero.js"></script>
-
 </body>
 </html>
