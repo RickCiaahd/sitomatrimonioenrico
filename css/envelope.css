@@ -1,5 +1,5 @@
-/* PROVA SAFARI: solo sfondo inferiore durante la chiusura. */
-html.envelope-closed body {
+/* Sfondo carta soltanto prima dell'apertura. */
+html.envelope-paper-background body {
     background: var(--paper-bottom);
 }
 .envelope-screen {
