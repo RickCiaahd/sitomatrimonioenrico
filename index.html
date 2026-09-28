@@ -28,7 +28,7 @@
             z-index: 999;
             pointer-events: none;
             opacity: 1;
-            transition: background-color 120ms linear;
+            transition: background-color 1000ms linear;
         }
         .safari-probe-top {
             top: 0;
@@ -55,7 +55,7 @@
             window.setTimeout(() => {
                 document.getElementById("safariProbeTop").classList.add("is-fading");
                 document.getElementById("safariProbeBottom").classList.add("is-fading");
-            }, 2150);
+            }, 500);
         }, { once: true });
         window.addEventListener("envelopeopened", () => {
             document.getElementById("safariProbeTop").hidden = true;
