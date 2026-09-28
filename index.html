@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="css/hero.css">
     <link rel="stylesheet" href="css/sections.css">
     <link rel="stylesheet" href="css/scroll.css">
-    <!-- Test temporaneo: strisce esterne ai bordi della finestra. -->
+    <!-- Test temporaneo: strisce interne ai bordi, dietro la busta. -->
     <style>
         .safari-probe {
             position: fixed;
@@ -32,12 +32,10 @@
         .safari-probe-top {
             top: 0;
             background: #0066FF;
-            transform: translateY(-100%);
         }
         .safari-probe-bottom {
             bottom: 0;
             background: #FF0000;
-            transform: translateY(100%);
         }
         .safari-probe[hidden] {
             display: none;
@@ -45,7 +43,7 @@
     </style>
 </head>
 <body>
-    <!-- SONDE SAFARI: ESTERNE ALLA BUSTA -->
+    <!-- SONDE SAFARI: ESTERNE AL CONTENITORE DELLA BUSTA -->
     <div
         class="safari-probe safari-probe-top"
         id="safariProbeTop"
