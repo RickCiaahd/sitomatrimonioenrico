@@ -26,6 +26,7 @@ const FLAP_DURATION = 3400;
 const BODY_START = 1600;
 const BODY_DURATION = 1450;
 const FLAP_FADE_DURATION = 280;
+
 const SCROLL_UNLOCK_PROGRESS = 0.65;
 
 let flapFrameId = null;
@@ -42,10 +43,16 @@ window.envelopeState = {
     opened: false
 };
 
-/* FUNZIONI DI SUPPORTO */
+
+/* =======================================================
+   FUNZIONI DI SUPPORTO
+======================================================= */
 
 function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
+    return Math.min(
+        Math.max(value, min),
+        max
+    );
 }
 
 function easeInOutCubic(t) {
@@ -60,42 +67,47 @@ function easeOutCubic(t) {
 
 function bendCurve(t) {
     return Math.pow(
-        Math.max(0, Math.sin(Math.PI * t)),
+        Math.max(
+            0,
+            Math.sin(Math.PI * t)
+        ),
         0.72
     );
 }
 
 function wait(milliseconds) {
     return new Promise(resolve => {
-        setTimeout(resolve, milliseconds);
+        setTimeout(
+            resolve,
+            milliseconds
+        );
     });
 }
 
 function hideEnvelopeContainer() {
     if (envelopeContainerHidden) return;
-
     envelopeContainerHidden = true;
     envelopeScreen.hidden = true;
     envelopeScreen.style.display = "none";
     envelopeScreen.setAttribute("aria-hidden", "true");
-
     unlockPageScroll();
 }
 
 function hideEnvelopeIfOutside() {
     if (envelopeContainerHidden || currentFlapRotation < 150) return;
-
     const screenBottom = envelopeScreen.getBoundingClientRect().bottom;
-    const bodyTop = envelopeBody.getBoundingClientRect().top;
-
-    // Margine per evitare residui sul bordo inferiore.
-    if (bodyTop >= screenBottom + 4) {
-        hideEnvelopeContainer();
-    }
+    const bodyTop = Math.min(
+        bodyLeftPath.getBoundingClientRect().top,
+        bodyRightPath.getBoundingClientRect().top,
+        bodyBottomPath.getBoundingClientRect().top
+    );
+    if (bodyTop >= screenBottom + 4) hideEnvelopeContainer();
 }
 
 function unlockPageScroll() {
-    if (scrollUnlocked) return;
+    if (scrollUnlocked) {
+        return;
+    }
 
     scrollUnlocked = true;
 
@@ -104,28 +116,64 @@ function unlockPageScroll() {
     envelopeStage.style.pointerEvents = "none";
     envelopeStage.style.touchAction = "auto";
 
-    document.documentElement.classList.remove("envelope-closed");
+    document.documentElement.classList.remove(
+        "envelope-closed"
+    );
 }
 
-/* GEOMETRIA LEMBO SUPERIORE */
+
+/* =======================================================
+   GEOMETRIA LEMBO SUPERIORE
+======================================================= */
 
 function getFlapGeometry(t) {
-    const bend = bendCurve(t);
-    const tipY = 1000 - 190 * bend;
-    const tipLeftX = 468;
-    const tipRightX = 532;
-    const tipSideY = tipY - 15;
-    const shoulderY = 420 + 35 * bend;
-    const leftShoulderX = 12 * bend;
-    const rightShoulderX = 1000 - 12 * bend;
-    const rightControl1X = 835 - 18 * bend;
-    const rightControl1Y = 590 + 15 * bend;
-    const rightControl2X = 625 - 10 * bend;
-    const rightControl2Y = 860 - 50 * bend;
-    const leftControl1X = 165 + 18 * bend;
-    const leftControl1Y = rightControl1Y;
-    const leftControl2X = 375 + 10 * bend;
-    const leftControl2Y = rightControl2Y;
+    const bend =
+        bendCurve(t);
+
+    const tipY =
+        1000 - 190 * bend;
+
+    const tipLeftX =
+        468;
+
+    const tipRightX =
+        532;
+
+    const tipSideY =
+        tipY - 15;
+
+    const shoulderY =
+        420 + 35 * bend;
+
+    const leftShoulderX =
+        12 * bend;
+
+    const rightShoulderX =
+        1000 - 12 * bend;
+
+    const rightControl1X =
+        835 - 18 * bend;
+
+    const rightControl1Y =
+        590 + 15 * bend;
+
+    const rightControl2X =
+        625 - 10 * bend;
+
+    const rightControl2Y =
+        860 - 50 * bend;
+
+    const leftControl1X =
+        165 + 18 * bend;
+
+    const leftControl1Y =
+        rightControl1Y;
+
+    const leftControl2X =
+        375 + 10 * bend;
+
+    const leftControl2Y =
+        rightControl2Y;
 
     const d = `
         M 0 0
@@ -144,10 +192,17 @@ function getFlapGeometry(t) {
         Z
     `;
 
-    return { d, tipY, bend };
+    return {
+        d,
+        tipY,
+        bend
+    };
 }
 
-/* CORPO DELLA BUSTA */
+
+/* =======================================================
+   CORPO DELLA BUSTA
+======================================================= */
 
 function drawEnvelopeBody() {
     const sideStartY = 192.5;
@@ -203,33 +258,64 @@ function drawEnvelopeBody() {
     `);
 }
 
-/* DISEGNO DEL LEMBO DURANTE L'ANIMAZIONE */
+
+/* =======================================================
+   DISEGNO DEL LEMBO DURANTE L'ANIMAZIONE
+======================================================= */
 
 function drawFlapFrame(progress) {
-    const t = clamp(progress, 0, 1);
-    const geometry = getFlapGeometry(t);
-    const bend = geometry.bend;
+    const t =
+        clamp(
+            progress,
+            0,
+            1
+        );
+
+    const geometry =
+        getFlapGeometry(t);
+
+    const bend =
+        geometry.bend;
 
     let rotation;
 
     if (t < 0.94) {
-        rotation = 181.5 * easeInOutCubic(t / 0.94);
+        rotation =
+            181.5 *
+            easeInOutCubic(
+                t / 0.94
+            );
     } else {
-        const settle = (t - 0.94) / 0.06;
-        rotation = 181.5 - 1.5 * easeOutCubic(settle);
+        const settle =
+            (t - 0.94) /
+            0.06;
+
+        rotation =
+            181.5 -
+            1.5 *
+            easeOutCubic(
+                settle
+            );
     }
 
     currentFlapRotation = rotation;
 
-    const depth = 20 * bend;
+    const depth =
+        20 * bend;
 
-    flap.style.transform = `
-        rotateX(${rotation}deg)
-        translateZ(${depth}px)
-    `;
+    flap.style.transform =
+        `rotateX(${rotation}deg)
+         translateZ(${depth}px)`;
 
-    flapPath.setAttribute("d", geometry.d);
-    flapEdgePath.setAttribute("d", geometry.d);
+    flapPath.setAttribute(
+        "d",
+        geometry.d
+    );
+
+    flapEdgePath.setAttribute(
+        "d",
+        geometry.d
+    );
 
     flapPath.setAttribute(
         "fill",
@@ -238,18 +324,30 @@ function drawFlapFrame(progress) {
             : "url(#paperBack)"
     );
 
-    waxSeal.style.left = "50%";
-    waxSeal.style.top = `${geometry.tipY / 10}%`;
-    waxSeal.style.visibility = rotation < 90 ? "visible" : "hidden";
+    waxSeal.style.left =
+        "50%";
 
-    flapShadow.style.opacity = `${0.23 * bend}`;
+    waxSeal.style.top =
+        `${geometry.tipY / 10}%`;
+
+    waxSeal.style.visibility =
+        rotation < 90
+            ? "visible"
+            : "hidden";
+
+    flapShadow.style.opacity =
+        `${0.23 * bend}`;
+
     flapShadow.style.transform = `
         translate(-50%, ${-50 + 17 * t}%)
         scaleX(${0.93 - 0.15 * bend})
         scaleY(${0.08 + 0.74 * bend})
     `;
 
-    const shade = Math.round(8 * bend);
+    const shade =
+        Math.round(
+            8 * bend
+        );
 
     frontStop1.setAttribute(
         "stop-color",
@@ -267,30 +365,54 @@ function drawFlapFrame(progress) {
     );
 }
 
-/* MOTORE ANIMAZIONE */
 
-function animate(duration, draw, setFrameId) {
+/* =======================================================
+   MOTORE ANIMAZIONE
+======================================================= */
+
+function animate(
+    duration,
+    draw,
+    setFrameId
+) {
     return new Promise(resolve => {
-        const start = performance.now();
+        const start =
+            performance.now();
 
         function frame(now) {
-            const progress = clamp((now - start) / duration, 0, 1);
+            const progress =
+                clamp(
+                    (now - start) / duration,
+                    0,
+                    1
+                );
 
             draw(progress);
 
             if (progress < 1) {
-                setFrameId(requestAnimationFrame(frame));
+                setFrameId(
+                    requestAnimationFrame(
+                        frame
+                    )
+                );
             } else {
                 setFrameId(null);
                 resolve();
             }
         }
 
-        setFrameId(requestAnimationFrame(frame));
+        setFrameId(
+            requestAnimationFrame(
+                frame
+            )
+        );
     });
 }
 
-/* ANIMAZIONE LEMBO */
+
+/* =======================================================
+   ANIMAZIONE LEMBO
+======================================================= */
 
 function animateFlap() {
     return animate(
@@ -302,19 +424,28 @@ function animateFlap() {
     );
 }
 
-/* DISCESA DEL CORPO DELLA BUSTA */
+
+/* =======================================================
+   DISCESA DEL CORPO DELLA BUSTA
+======================================================= */
 
 function animateEnvelopeDown() {
     return animate(
         BODY_DURATION,
         progress => {
-            const e = easeInOutCubic(progress);
+            const e =
+                easeInOutCubic(
+                    progress
+                );
 
-            envelopeBody.style.transform = `translateY(${112 * e}vh)`;
+            envelopeBody.style.transform =
+                `translateY(${112 * e}vh)`;
 
             hideEnvelopeIfOutside();
 
-            if (progress >= SCROLL_UNLOCK_PROGRESS) {
+            if (
+                progress >= SCROLL_UNLOCK_PROGRESS
+            ) {
                 unlockPageScroll();
             }
         },
@@ -324,46 +455,75 @@ function animateEnvelopeDown() {
     );
 }
 
-/* DISSOLVENZA DEL LEMBO */
+
+/* =======================================================
+   DISSOLVENZA DEL LEMBO
+======================================================= */
 
 function fadeOutFlap() {
     window.dispatchEvent(new CustomEvent("envelopefading"));
-
     return animate(
         FLAP_FADE_DURATION,
         progress => {
-            const e = easeOutCubic(progress);
+            const e =
+                easeOutCubic(
+                    progress
+                );
 
-            flap.style.opacity = `${1 - e}`;
-            flapShadow.style.opacity = `${0.06 * (1 - e)}`;
+            flap.style.opacity =
+                `${1 - e}`;
+
+            flapShadow.style.opacity =
+                `${0.06 * (1 - e)}`;
         },
         id => {
             fadeFrameId = id;
         }
     ).then(() => {
-        flap.style.opacity = "0";
-        flapShadow.style.opacity = "0";
+        flap.style.opacity =
+            "0";
+
+        flapShadow.style.opacity =
+            "0";
     });
 }
 
-/* APERTURA DELLA BUSTA */
+
+/* =======================================================
+   APERTURA DELLA BUSTA
+======================================================= */
 
 async function openEnvelope() {
-    if (opening || opened) return;
+    if (
+        opening ||
+        opened
+    ) {
+        return;
+    }
 
-    opening = true;
+    opening =
+        true;
 
-    window.dispatchEvent(new CustomEvent("envelopeopening"));
 
-    const flapPromise = animateFlap();
+    window.dispatchEvent(
+        new CustomEvent(
+            "envelopeopening"
+        )
+    );
 
-    await wait(BODY_START);
+    const flapPromise =
+        animateFlap();
+
+    await wait(
+        BODY_START
+    );
 
     const bodyPromise = animateEnvelopeDown().then(hideEnvelopeContainer);
 
     await flapPromise;
 
-    const fadePromise = fadeOutFlap();
+    const fadePromise =
+        fadeOutFlap();
 
     await Promise.all([
         bodyPromise,
@@ -372,54 +532,119 @@ async function openEnvelope() {
 
     unlockPageScroll();
 
-    opening = false;
-    opened = true;
-    window.envelopeState.opened = true;
+    opening =
+        false;
 
-    envelopeScreen.classList.add("opened");
-    envelopeScreen.setAttribute("aria-hidden", "true");
+    opened =
+        true;
 
-    envelopeScreen.style.pointerEvents = "none";
-    envelopeScreen.style.touchAction = "auto";
-    envelopeStage.style.pointerEvents = "none";
-    envelopeStage.style.touchAction = "auto";
+    window.envelopeState.opened =
+        true;
 
-    envelopeScreen.hidden = true;
+    envelopeScreen.classList.add(
+        "opened"
+    );
 
-    window.dispatchEvent(new CustomEvent("envelopeopened"));
+    envelopeScreen.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    envelopeScreen.style.pointerEvents =
+        "none";
+
+    envelopeScreen.style.touchAction =
+        "auto";
+
+    envelopeStage.style.pointerEvents =
+        "none";
+
+    envelopeStage.style.touchAction =
+        "auto";
+
+    envelopeScreen.hidden =
+        true;
+
+    window.dispatchEvent(
+        new CustomEvent(
+            "envelopeopened"
+        )
+    );
 }
 
-/* INIZIALIZZAZIONE */
+
+/* =======================================================
+   INIZIALIZZAZIONE
+======================================================= */
 
 function initialiseEnvelope() {
-    window.scrollTo(0, 0);
+    window.scrollTo(
+        0,
+        0
+    );
 
-    document.documentElement.classList.add("envelope-closed");
+    document.documentElement.classList.add(
+        "envelope-closed"
+    );
+
 
     drawEnvelopeBody();
 
-    const initialGeometry = getFlapGeometry(0);
+    const initialGeometry =
+        getFlapGeometry(0);
 
-    flapPath.setAttribute("d", initialGeometry.d);
-    flapEdgePath.setAttribute("d", initialGeometry.d);
-    flapPath.setAttribute("fill", "url(#paperFront)");
+    flapPath.setAttribute(
+        "d",
+        initialGeometry.d
+    );
 
-    waxSeal.style.left = "50%";
-    waxSeal.style.top = `${initialGeometry.tipY / 10}%`;
-    waxSeal.style.visibility = "visible";
+    flapEdgePath.setAttribute(
+        "d",
+        initialGeometry.d
+    );
+
+    flapPath.setAttribute(
+        "fill",
+        "url(#paperFront)"
+    );
+
+    waxSeal.style.left =
+        "50%";
+
+    waxSeal.style.top =
+        `${initialGeometry.tipY / 10}%`;
+
+    waxSeal.style.visibility =
+        "visible";
 }
 
-/* EVENTI */
 
-envelopeStage.addEventListener("click", openEnvelope);
+/* =======================================================
+   EVENTI
+======================================================= */
 
-envelopeStage.addEventListener("keydown", event => {
-    if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openEnvelope();
+envelopeStage.addEventListener(
+    "click",
+    openEnvelope
+);
+
+envelopeStage.addEventListener(
+    "keydown",
+    event => {
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+            event.preventDefault();
+
+            openEnvelope();
+        }
     }
-});
+);
 
-/* AVVIO */
+
+/* =======================================================
+   AVVIO
+======================================================= */
 
 initialiseEnvelope();
