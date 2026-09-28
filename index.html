@@ -53,8 +53,8 @@
     <script>
         window.addEventListener("envelopeopening", () => {
             window.setTimeout(() => {
-                document.getElementById("safariProbeTop").classList.add("is-fading");
-                document.getElementById("safariProbeBottom").classList.add("is-fading");
+                document.getElementById("safariProbeTop").hidden = true;
+document.getElementById("safariProbeBottom").hidden = true;
             }, 0);
         }, { once: true });
         window.addEventListener("envelopeopened", () => {
