@@ -1,81 +1,159 @@
-/* SEZIONI */
+/* =======================================================
+   SEZIONI
+======================================================= */
 
 .section {
     position: relative;
+
     width: 100%;
-    padding: 60px 24px;
+
+    padding:
+        60px
+        24px;
+
     background: transparent;
 }
+
+
+/* =======================================================
+   SEZIONI ALTERNATE
+======================================================= */
 
 .section-alt {
     background: transparent;
 }
 
+
 .section-inner {
     position: relative;
+
     width: 100%;
     max-width: 980px;
+
     margin: 0 auto;
+
     text-align: center;
+
     z-index: 2;
 }
 
-/* TITOLI */
+
+/* =======================================================
+   TITOLI
+======================================================= */
 
 .section-title {
-    margin: 0 0 18px;
+    margin:
+        0
+        0
+        18px;
+
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
+
     gap: 8px;
-    font-size: clamp(2rem, 5vw, 3.4rem);
+
+    font-size:
+        clamp(
+            2rem,
+            5vw,
+            3.4rem
+        );
+
     font-weight: 400;
+
     line-height: 1.1;
 }
 
+
 .section-emoji {
     display: block;
+
     font-size: 2rem;
+
     line-height: 1;
 }
 
+
 .section-title-image {
     display: block;
+
     width: 46px;
     height: 46px;
+
     object-fit: contain;
 }
 
-/* TESTO */
+
+/* =======================================================
+   TESTO
+======================================================= */
 
 .section-text {
     max-width: 700px;
-    margin: 0 auto 26px;
+
+    margin:
+        0
+        auto
+        26px;
+
     color: var(--muted);
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     font-size: 1rem;
+
     line-height: 1.75;
 }
 
-/* PULSANTI - BASE */
+
+/* =======================================================
+   PULSANTI - BASE
+======================================================= */
 
 .button {
     display: inline-flex;
+
     justify-content: center;
     align-items: center;
+
     gap: 8px;
+
     min-height: 48px;
-    padding: 13px 24px;
-    border: 1px solid transparent;
+
+    padding:
+        13px
+        24px;
+
+    border:
+        1px solid
+        transparent;
+
     border-radius: 999px;
+
     color: #FFFFFF;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     font-size: 0.88rem;
+
     font-weight: 600;
+
     line-height: 1.2;
+
     cursor: pointer;
+
     box-shadow: none;
+
     transition:
         transform 0.28s cubic-bezier(.22, 1, .36, 1),
         background-color 0.28s ease,
@@ -83,440 +161,790 @@
         color 0.28s ease;
 }
 
+
 .button:hover {
-    transform: translateY(-1px);
+    transform:
+        translateY(-1px);
 }
+
 
 .button:active {
-    transform: translateY(1px) scale(0.985);
+    transform:
+        translateY(1px)
+        scale(0.985);
 }
 
-/* RSVP */
+
+/* =======================================================
+   RSVP
+======================================================= */
 
 #rsvp .button-primary {
-    background: #ED81C0;
-    border-color: #ED81C0;
-    color: #FFFFFF;
+    background:
+        #ED81C0;
+
+    border-color:
+        #ED81C0;
+
+    color:
+        #FFFFFF;
 }
+
 
 #rsvp .button-primary:hover {
-    background: #E673B6;
-    border-color: #E673B6;
+    background:
+        #E673B6;
+
+    border-color:
+        #E673B6;
 }
 
-/* PULSANTE SECONDARIO */
+
+/* =======================================================
+   PULSANTE SECONDARIO
+======================================================= */
 
 .button-secondary {
-    background: rgba(255, 255, 255, 0.60);
-    color: #9181BB;
-    border: 1px solid #ABA5F0;
+    background:
+        rgba(255, 255, 255, 0.60);
+
+    color:
+        #9181BB;
+
+    border:
+        1px solid
+        #ABA5F0;
 }
+
 
 .button-secondary:hover {
-    background: rgba(171, 165, 240, 0.10);
-    color: #8176B8;
+    background:
+        rgba(171, 165, 240, 0.10);
+
+    color:
+        #8176B8;
 }
 
-/* PULSANTI PICCOLI */
+
+/* =======================================================
+   PULSANTI PICCOLI
+======================================================= */
 
 .button-small {
     min-height: 42px;
-    padding: 10px 17px;
+
+    padding:
+        10px
+        17px;
+
     font-size: 0.8rem;
 }
 
-/* NAVIGAZIONE */
+
+/* =======================================================
+   NAVIGAZIONE
+======================================================= */
 
 .map-button {
     gap: 7px;
 }
 
+
 .navigation-logo {
     display: block;
+
     width: 20px;
     height: 20px;
+
     object-fit: contain;
+
     flex: 0 0 auto;
 }
 
-/* GOOGLE MAPS */
+
+/* =======================================================
+   GOOGLE MAPS
+======================================================= */
 
 .map-button[href*="maps"] {
-    background: #6770E1;
-    color: #FFFFFF;
-    border: 1px solid #2A30A4;
+    background:
+        #6770E1;
+
+    color:
+        #FFFFFF;
+
+    border:
+        1px solid
+        #2A30A4;
 }
+
 
 .map-button[href*="maps"]:hover {
-    background: #5C65D8;
-    border-color: #2A30A4;
+    background:
+        #5C65D8;
+
+    border-color:
+        #2A30A4;
 }
 
-/* WAZE */
+
+/* =======================================================
+   WAZE
+======================================================= */
 
 .map-button[href*="waze"] {
-    background: rgba(255, 255, 255, 0.88);
-    color: #2A30A4;
-    border: 1px solid #2A30A4;
+    background:
+        rgba(255, 255, 255, 0.88);
+
+    color:
+        #2A30A4;
+
+    border:
+        1px solid
+        #2A30A4;
 }
+
 
 .map-button[href*="waze"]:hover {
-    background: #FFFFFF;
-    color: #2A30A4;
+    background:
+        #FFFFFF;
+
+    color:
+        #2A30A4;
 }
 
-/* CERIMONIA */
+
+/* =======================================================
+   CERIMONIA
+======================================================= */
 
 .ceremony-button {
     margin-top: 14px;
-    background: var(--gold);
-    color: var(--warm-white);
-    border-color: var(--gold);
+
+    background:
+        var(--gold);
+
+    color:
+        var(--warm-white);
+
+    border-color:
+        var(--gold);
 }
+
 
 .ceremony-button:hover {
-    background: var(--gold-dark);
-    border-color: var(--gold-dark);
+    background:
+        var(--gold-dark);
+
+    border-color:
+        var(--gold-dark);
 }
+
 
 .ceremony-button:active {
-    background: var(--gold-active);
-    border-color: var(--gold-active);
+    background:
+        var(--gold-active);
+
+    border-color:
+        var(--gold-active);
 }
 
-/* LUOGHI */
+
+/* =======================================================
+   LUOGHI
+======================================================= */
 
 .places-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px 24px;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap:
+        12px
+        24px;
+
     margin-top: 22px;
 }
+
 
 .place-card {
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
+
     min-height: 170px;
-    padding: 20px 24px;
+
+    padding:
+        20px
+        24px;
+
     border: none;
+
     border-radius: 0;
+
     background: transparent;
+
     box-shadow: none;
+
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
 
+
 .place-card h3 {
-    margin: 0 0 18px;
+    margin:
+        0
+        0
+        18px;
+
     display: flex;
+
     justify-content: center;
     align-items: center;
+
     gap: 8px;
-    font-size: clamp(1.25rem, 3vw, 1.55rem);
+
+    font-size:
+        clamp(
+            1.25rem,
+            3vw,
+            1.55rem
+        );
+
     font-weight: 400;
+
     line-height: 1.25;
+
     text-align: center;
 }
 
+
 .navigation-buttons {
     display: flex;
+
     flex-wrap: wrap;
+
     justify-content: center;
+
     gap: 10px;
 }
 
-/* ALBUM */
+
+/* =======================================================
+   ALBUM
+======================================================= */
 
 .album-card {
     max-width: 600px;
-    margin: 24px auto 0;
-    padding: 18px 28px;
+
+    margin:
+        24px
+        auto
+        0;
+
+    padding:
+        18px
+        28px;
+
     border: none;
+
     border-radius: 0;
+
     background: transparent;
+
     box-shadow: none;
+
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
 
-/* PULSANTE ALBUM */
+
+/* =======================================================
+   PULSANTE ALBUM
+======================================================= */
 
 #album .button-primary {
-    background: #ABA5F0;
-    border-color: #ABA5F0;
-    color: #FFFFFF;
+    background:
+        #ABA5F0;
+
+    border-color:
+        #ABA5F0;
+
+    color:
+        #FFFFFF;
 }
+
 
 #album .button-primary:hover {
-    background: #9D96E4;
-    border-color: #9D96E4;
+    background:
+        #9D96E4;
+
+    border-color:
+        #9D96E4;
 }
 
-/* CODICE ACCESSO */
+
+/* =======================================================
+   CODICE ACCESSO
+======================================================= */
 
 .access-code {
     margin-top: 20px;
+
     display: flex;
+
     flex-wrap: wrap;
+
     justify-content: center;
     align-items: center;
+
     gap: 12px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: var(--muted);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:
+        var(--muted);
 }
+
 
 .access-code-label {
     display: inline-flex;
+
     align-items: center;
+
     gap: 5px;
+
     font-size: 0.82rem;
 }
 
+
 .access-code strong {
-    color: var(--text);
+    color:
+        var(--text);
+
     font-size: 0.95rem;
+
     letter-spacing: 0.04em;
 }
 
-/* COPIA CODICE / COPIA IBAN */
+
+/* =======================================================
+   COPIA CODICE / COPIA IBAN
+======================================================= */
 
 .copy-button {
     display: inline-flex;
+
     justify-content: center;
     align-items: center;
+
     gap: 6px;
+
     min-height: 36px;
-    padding: 8px 14px;
-    border: 1px solid #ABA5F0;
+
+    padding:
+        8px
+        14px;
+
+    border:
+        1px solid
+        #ABA5F0;
+
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.82);
-    color: #8176B8;
-    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        rgba(255, 255, 255, 0.82);
+
+    color:
+        #8176B8;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     font-size: 0.75rem;
+
     font-weight: 600;
+
     cursor: pointer;
+
     box-shadow: none;
+
     transition:
         transform 0.28s cubic-bezier(.22, 1, .36, 1),
         background-color 0.28s ease,
         border-color 0.28s ease;
 }
 
+
 .copy-button:hover {
-    background: #FFFFFF;
-    border-color: #918BE0;
-    transform: translateY(-1px);
+    background:
+        #FFFFFF;
+
+    border-color:
+        #918BE0;
+
+    transform:
+        translateY(-1px);
 }
+
 
 .copy-button:active {
-    transform: translateY(1px) scale(0.985);
+    transform:
+        translateY(1px)
+        scale(0.985);
 }
 
-/* REGALO */
+
+/* =======================================================
+   REGALO
+======================================================= */
 
 .gift-details {
     max-width: 620px;
-    margin: 24px auto 0;
-    padding: 20px 30px;
+
+    margin:
+        24px
+        auto
+        0;
+
+    padding:
+        20px
+        30px;
+
     border: none;
+
     border-radius: 0;
+
     background: transparent;
+
     box-shadow: none;
+
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
+
 
 .gift-details[hidden] {
     display: none;
 }
 
-/* PULSANTE SCOPRI DI PIÙ */
+
+/* =======================================================
+   PULSANTE SCOPRI DI PIÙ
+======================================================= */
 
 #giftToggle {
-    background: #ABA5F0;
-    border-color: #ABA5F0;
-    color: #FFFFFF;
+    background:
+        #ABA5F0;
+
+    border-color:
+        #ABA5F0;
+
+    color:
+        #FFFFFF;
 }
+
 
 #giftToggle:hover {
-    background: #9D96E4;
-    border-color: #9D96E4;
+    background:
+        #9D96E4;
+
+    border-color:
+        #9D96E4;
 }
 
-/* DATI REGALO */
+
+/* =======================================================
+   DATI REGALO
+======================================================= */
 
 .gift-row {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     gap: 20px;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(125, 111, 101, 0.10);
+
+    padding:
+        12px
+        0;
+
+    border-bottom:
+        1px solid
+        rgba(125, 111, 101, 0.10);
+
     text-align: left;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
+
 
 .gift-row:last-child {
     border-bottom: 0;
 }
 
+
 .gift-row span {
-    flex: 0 0 auto;
-    color: var(--muted);
+    flex:
+        0
+        0
+        auto;
+
+    color:
+        var(--muted);
+
     font-size: 0.8rem;
 }
 
+
 .gift-row strong {
     text-align: right;
+
     font-size: 0.92rem;
+
     font-weight: 600;
+
     overflow-wrap: anywhere;
 }
+
 
 .gift-iban {
     margin-bottom: 8px;
 }
 
+
 .gift-details > .copy-button {
-    margin: 2px 0 8px;
+    margin:
+        2px
+        0
+        8px;
 }
 
-/* SEZIONE FINALE */
+
+/* =======================================================
+   SEZIONE FINALE
+======================================================= */
 
 #sogno {
     padding-bottom: 42px;
 }
 
-/* FIAT 500 - DECORAZIONE FINALE */
+
+/* =======================================================
+   FIAT 500 - DECORAZIONE FINALE
+======================================================= */
 
 .footer-500 {
     position: relative;
+
     width: 100%;
+
     display: flex;
+
     justify-content: flex-end;
     align-items: flex-end;
+
     padding:
         0
         clamp(22px, 4vw, 64px)
         clamp(28px, 4vw, 50px);
+
     pointer-events: none;
+
     user-select: none;
+
     z-index: 2;
 }
 
+
 .footer-500 img {
     display: block;
-    width: min(45vw, 700px);
+
+    width:
+        min(
+            45vw,
+            700px
+        );
+
     max-width: 100%;
+
     height: auto;
+
     object-fit: contain;
+
     pointer-events: none;
+
     user-select: none;
+
     -webkit-user-drag: none;
 }
 
-/* MOBILE */
+
+/* =======================================================
+   MOBILE
+======================================================= */
 
 @media (max-width: 760px) {
+
     .section {
-        padding: 48px 20px;
+        padding:
+            48px
+            20px;
     }
+
 
     .section-title {
         gap: 7px;
+
         margin-bottom: 16px;
     }
+
 
     .section-emoji {
         font-size: 1.85rem;
     }
+
 
     .section-title-image {
         width: 42px;
         height: 42px;
     }
 
+
     .section-text {
         margin-bottom: 22px;
     }
 
+
     .places-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
+
         gap: 4px;
+
         margin-top: 18px;
     }
 
+
     .place-card {
         min-height: 0;
-        padding: 18px 12px;
+
+        padding:
+            18px
+            12px;
+
         border-radius: 0;
     }
 
+
     .place-card h3 {
         gap: 7px;
+
         margin-bottom: 14px;
     }
+
 
     .navigation-buttons {
         width: 100%;
     }
 
+
     .navigation-buttons .button {
-        flex: 1 1 120px;
+        flex:
+            1
+            1
+            120px;
     }
+
 
     .navigation-logo {
         width: 19px;
         height: 19px;
     }
 
+
     .album-card,
     .gift-details {
-        padding: 16px 20px;
+        padding:
+            16px
+            20px;
+
         border-radius: 0;
     }
+
 
     .album-card {
         margin-top: 18px;
     }
 
+
     .access-code {
         margin-top: 18px;
+
         flex-direction: column;
+
         gap: 8px;
     }
+
 
     .gift-details {
         margin-top: 18px;
     }
 
+
     .gift-row {
         flex-direction: column;
+
         align-items: flex-start;
+
         gap: 6px;
     }
 
+
     .gift-row strong {
         width: 100%;
+
         text-align: left;
     }
+
 
     #sogno {
         padding-bottom: 34px;
     }
 
+
     .footer-500 {
-        padding: 0 18px 24px;
+        padding:
+            0
+            18px
+            24px;
     }
+
 
     .footer-500 img {
         width: 45vw;
     }
+
 }
 
-/* CALENDARIO */
+/* =======================================================
+   CALENDARIO
+======================================================= */
 
 .calendar-trigger {
     margin-top: 16px;
@@ -624,23 +1052,13 @@
 }
 
 @keyframes calendar-appear {
-    from {
-        transform: scale(0.33);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+    from { transform: scale(0.33); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
 @keyframes calendar-fade {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -648,4 +1066,21 @@
     .calendar-dialog[open]::backdrop {
         animation: none;
     }
+}
+
+/* COORDINATE BANCARIE SUL CARTONCINO */
+.gift-dialog .gift-details {
+    margin: 0;
+    padding: 0;
+}
+.gift-dialog .gift-row {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+}
+.gift-dialog .gift-row strong {
+    max-width: 100%;
+    text-align: center;
+    user-select: text;
+    -webkit-user-select: text;
 }
