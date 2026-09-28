@@ -16,13 +16,11 @@ const bodyBottomPath = $("bodyBottomPath");
 const bodyLeftFold = $("bodyLeftFold");
 const bodyRightFold = $("bodyRightFold");
 const bodyBottomFold = $("bodyBottomFold");
-
 const FLAP_DURATION = 3400;
 const BODY_START = 1600;
 const BODY_DURATION = 1450;
 const FLAP_FADE_DURATION = 280;
 const SCROLL_UNLOCK_PROGRESS = 0.65;
-
 let flapFrameId = null;
 let bodyFrameId = null;
 let fadeFrameId = null;
@@ -254,12 +252,12 @@ async function openEnvelope() {
     if (opening || opened) return;
     opening = true;
 
-    // Ripristina lo sfondo del sito 2,35 secondi dopo il click.
+    // Ripristina lo sfondo del sito 2,25 secondi dopo il click.
     window.setTimeout(() => {
         document.documentElement.classList.remove(
             "envelope-paper-background"
         );
-    }, 2350);
+    }, 2250);
 
     window.dispatchEvent(new CustomEvent("envelopeopening"));
     const flapPromise = animateFlap();
