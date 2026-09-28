@@ -44,33 +44,13 @@
         .safari-probe[hidden] {
             display: none;
         }
-        #safariDiagnostic {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2147483647;
-            width: 300px;
-            max-width: calc(100vw - 24px);
-            padding: 12px;
-            border: 2px solid #555;
-            border-radius: 10px;
-            background: #FFFFFF;
-            color: #111111;
-            box-shadow: 0 2px 12px #0003;
-            font: 13px/1.5 monospace;
-            pointer-events: none;
-            white-space: pre-line;
-        }
     </style>
 </head>
 <body>
     <!-- CORNICE SAFARI -->
     <div class="safari-probe safari-probe-top" id="safariProbeTop" aria-hidden="true"></div>
     <div class="safari-probe safari-probe-bottom" id="safariProbeBottom" aria-hidden="true"></div>
-
-    <!-- PANNELLO DIAGNOSTICO TEMPORANEO -->
-    <div id="safariDiagnostic" role="status">TEST FASCE A
+    <div id="safariDiagnostic" role="status" style="position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2147483647;max-width:calc(100vw - 24px);width:300px;padding:12px;border-radius:10px;background:#fff;color:#111;border:2px solid #555;box-shadow:0 2px 12px #0003;font:13px/1.5 monospace;pointer-events:none;white-space:pre-line">TEST FASCE B
 Pronto: tocca il sigillo.
 Il pannello non blocca il tocco.</div>
     <script>
@@ -79,39 +59,28 @@ Il pannello non blocca il tocco.</div>
             const topStrip = document.getElementById("safariProbeTop");
             const bottomStrip = document.getElementById("safariProbeBottom");
             let start = null;
-            let hiddenAt = null;
+            let removedAt = null;
             let openedAt = null;
             let interval = null;
             const seconds = value => (value / 1000).toFixed(2) + " s";
 
             function stripState(element) {
-                return "hidden=" + element.hidden +
-                    "; display=" + getComputedStyle(element).display;
+                return element.isConnected ? "presente" : "rimossa dalla pagina";
             }
 
             function update() {
                 const elapsed = performance.now() - start;
-                const bothHidden =
-                    getComputedStyle(topStrip).display === "none" &&
-                    getComputedStyle(bottomStrip).display === "none";
+                const bothRemoved = !topStrip.isConnected && !bottomStrip.isConnected;
+                if (bothRemoved && removedAt === null) removedAt = elapsed;
 
-                if (bothHidden && hiddenAt === null) {
-                    hiddenAt = elapsed;
-                }
-
-                panel.textContent =
-                    "TEST FASCE A — " + seconds(elapsed) +
+                panel.textContent = "TEST FASCE B — " + seconds(elapsed) +
                     "\nEvento iniziale: ricevuto" +
                     "\nSopra: " + stripState(topStrip) +
                     "\nSotto: " + stripState(bottomStrip) +
-                    "\nNascoste rilevate a: " +
-                    (hiddenAt === null ? "in attesa" : seconds(hiddenAt)) +
-                    "\nFine busta: " +
-                    (openedAt === null ? "in attesa" : seconds(openedAt));
+                    "\nRimosse rilevate a: " + (removedAt === null ? "in attesa" : seconds(removedAt)) +
+                    "\nFine busta: " + (openedAt === null ? "in attesa" : seconds(openedAt));
 
-                panel.style.borderColor =
-                    bothHidden ? "#16803c" : "#c43030";
-
+                panel.style.borderColor = bothRemoved ? "#16803c" : "#c43030";
                 if (elapsed >= 8000) {
                     clearInterval(interval);
                     panel.textContent += "\nMisurazione terminata.";
@@ -121,45 +90,30 @@ Il pannello non blocca il tocco.</div>
             window.addEventListener("envelopeopening", () => {
                 start = performance.now();
                 update();
-
                 window.setTimeout(() => {
-                    topStrip.hidden = true;
-                    bottomStrip.hidden = true;
+                    topStrip.remove();
+                    bottomStrip.remove();
                     update();
                 }, 0);
-
                 interval = window.setInterval(update, 100);
             }, { once: true });
 
             window.addEventListener("envelopeopened", () => {
-                if (start !== null) {
-                    openedAt = performance.now() - start;
-                }
-                topStrip.hidden = true;
-                bottomStrip.hidden = true;
-                if (start !== null) {
-                    update();
-                }
+                if (start !== null) openedAt = performance.now() - start;
+                topStrip.remove();
+                bottomStrip.remove();
+                if (start !== null) update();
             }, { once: true });
         })();
     </script>
 
     <!-- BUSTA -->
     <div class="envelope-screen" id="envelopeScreen">
-        <div
-            class="envelope-stage"
-            id="envelopeStage"
-            role="button"
-            tabindex="0"
-            aria-label="Apri l'invito"
-        >
+        <div class="envelope-stage" id="envelopeStage" role="button"
+             tabindex="0" aria-label="Apri l'invito">
             <div class="envelope-body" id="envelopeBody">
-                <svg
-                    class="body-svg"
-                    viewBox="0 0 1000 1000"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                >
+                <svg class="body-svg" viewBox="0 0 1000 1000"
+                     preserveAspectRatio="none" aria-hidden="true">
                     <path class="body-side" id="bodyLeftPath"></path>
                     <path class="body-side" id="bodyRightPath"></path>
                     <path class="body-bottom" id="bodyBottomPath"></path>
@@ -170,12 +124,8 @@ Il pannello non blocca il tocco.</div>
             </div>
             <div class="flap-shadow" id="flapShadow"></div>
             <div class="envelope-flap" id="flap">
-                <svg
-                    class="flap-svg"
-                    viewBox="0 0 1000 1000"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                >
+                <svg class="flap-svg" viewBox="0 0 1000 1000"
+                     preserveAspectRatio="none" aria-hidden="true">
                     <defs>
                         <linearGradient id="paperFront" x1="0" y1="0" x2="0" y2="1">
                             <stop id="frontStop1" offset="0%" stop-color="#EADCC8"></stop>
@@ -187,26 +137,16 @@ Il pannello non blocca il tocco.</div>
                             <stop offset="100%" stop-color="#D8C2A6"></stop>
                         </linearGradient>
                         <filter id="paperShadow" x="-20%" y="-20%" width="140%" height="160%">
-                            <feDropShadow
-                                dx="0"
-                                dy="7"
-                                stdDeviation="8"
-                                flood-color="#6F5137"
-                                flood-opacity="0.16"
-                            ></feDropShadow>
+                            <feDropShadow dx="0" dy="7" stdDeviation="8"
+                                flood-color="#6F5137" flood-opacity="0.16"></feDropShadow>
                         </filter>
                     </defs>
                     <path class="flap-paper" id="flapPath"></path>
                     <path class="flap-edge" id="flapEdgePath"></path>
                 </svg>
                 <div class="wax-seal" id="waxSeal">
-                    <img
-                        src="images/sigillo-AE.png"
-                        loading="eager"
-                        fetchpriority="high"
-                        alt=""
-                        draggable="false"
-                    >
+                    <img src="images/sigillo-AE.png" loading="eager"
+                         fetchpriority="high" alt="" draggable="false">
                 </div>
             </div>
         </div>
@@ -217,21 +157,13 @@ Il pannello non blocca il tocco.</div>
         <!-- HERO -->
         <section class="hero" id="hero">
             <div class="hero-content">
-                <img
-                    class="hero-portrait"
-                    src="images/ritratto.png"
-                    alt="Enrico e Annachiara"
-                    draggable="false"
-                >
+                <img class="hero-portrait" src="images/ritratto.png"
+                     alt="Enrico e Annachiara" draggable="false">
                 <h1>Enrico &amp; Annachiara</h1>
                 <p class="hero-date">12 giugno 2027</p>
                 <div class="countdown-paper" id="countdown">
-                    <img
-                        class="countdown-paper-image"
-                        src="images/cartoncino.png"
-                        alt=""
-                        draggable="false"
-                    >
+                    <img class="countdown-paper-image" src="images/cartoncino.png"
+                         alt="" draggable="false">
                     <div class="countdown-paper-content">
                         <div class="countdown-grid">
                             <div class="countdown-item">
@@ -263,22 +195,14 @@ Il pannello non blocca il tocco.</div>
                     <span class="section-emoji" aria-hidden="true">💌</span>
                     Ci sarete?
                 </h2>
-                <a
-                    class="button button-primary"
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSfR47MLRdUuwzttRWqgoxmSrlCjPIJb15usxh1CkX8zXxw4Rw/viewform"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a class="button button-primary"
+                   href="https://docs.google.com/forms/d/e/1FAIpQLSfR47MLRdUuwzttRWqgoxmSrlCjPIJb15usxh1CkX8zXxw4Rw/viewform"
+                   target="_blank" rel="noopener noreferrer">
                     Conferma la tua presenza
                 </a>
                 <div class="calendar-trigger">
-                    <button
-                        class="button button-secondary"
-                        id="calendarOpen"
-                        type="button"
-                        aria-haspopup="dialog"
-                        aria-controls="calendarDialog"
-                    >
+                    <button class="button button-secondary" id="calendarOpen"
+                            type="button" aria-haspopup="dialog" aria-controls="calendarDialog">
                         📅 Aggiungi a calendario
                     </button>
                 </div>
@@ -299,21 +223,15 @@ Il pannello non blocca il tocco.</div>
                             Casa dello sposo
                         </h3>
                         <div class="navigation-buttons">
-                            <a
-                                class="button button-small map-button"
-                                href="https://maps.app.goo.gl/kmqRrXZQPzqEgdiU8"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a class="button button-small map-button"
+                               href="https://maps.app.goo.gl/kmqRrXZQPzqEgdiU8"
+                               target="_blank" rel="noopener noreferrer">
                                 <img class="navigation-logo" src="images/maps.png" alt="" draggable="false">
                                 Maps
                             </a>
-                            <a
-                                class="button button-small map-button"
-                                href="https://waze.com/ul?ll=40.608131%2C14.978180&navigate=yes"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a class="button button-small map-button"
+                               href="https://waze.com/ul?ll=40.608131%2C14.978180&navigate=yes"
+                               target="_blank" rel="noopener noreferrer">
                                 <img class="navigation-logo" src="images/waze.png" alt="" draggable="false">
                                 Waze
                             </a>
@@ -325,21 +243,15 @@ Il pannello non blocca il tocco.</div>
                             Casa della sposa
                         </h3>
                         <div class="navigation-buttons">
-                            <a
-                                class="button button-small map-button"
-                                href="https://maps.app.goo.gl/kNUKDeFUFzFnu2As5"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a class="button button-small map-button"
+                               href="https://maps.app.goo.gl/kNUKDeFUFzFnu2As5"
+                               target="_blank" rel="noopener noreferrer">
                                 <img class="navigation-logo" src="images/maps.png" alt="" draggable="false">
                                 Maps
                             </a>
-                            <a
-                                class="button button-small map-button"
-                                href="https://waze.com/ul?ll=40.739052%2C14.755519&navigate=yes"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a class="button button-small map-button"
+                               href="https://waze.com/ul?ll=40.739052%2C14.755519&navigate=yes"
+                               target="_blank" rel="noopener noreferrer">
                                 <img class="navigation-logo" src="images/waze.png" alt="" draggable="false">
                                 Waze
                             </a>
@@ -351,31 +263,22 @@ Il pannello non blocca il tocco.</div>
                             Chiesa di San Martino Vescovo
                         </h3>
                         <div class="navigation-buttons">
-                            <a
-                                class="button button-small map-button"
-                                href="https://maps.app.goo.gl/6omwCTy1Atd1c3Cb7"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a class="button button-small map-button"
+                               href="https://maps.app.goo.gl/6omwCTy1Atd1c3Cb7"
+                               target="_blank" rel="noopener noreferrer">
                                 <img class="navigation-logo" src="images/maps.png" alt="" draggable="false">
                                 Maps
                             </a>
-                            <a
-                                class="button button-small map-button"
-                                href="https://waze.com/ul?ll=40.761874%2C14.785191&navigate=yes"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a class="button button-small map-button"
+                               href="https://waze.com/ul?ll=40.761874%2C14.785191&navigate=yes"
+                               target="_blank" rel="noopener noreferrer">
                                 <img class="navigation-logo" src="images/waze.png" alt="" draggable="false">
                                 Waze
                             </a>
                         </div>
-                        <a
-                            class="button ceremony-button"
-                            href="documenti/libretto-messa.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                        <a class="button ceremony-button"
+                           href="documenti/libretto-messa.pdf"
+                           target="_blank" rel="noopener noreferrer">
                             📖 Segui con noi la cerimonia
                         </a>
                     </article>
@@ -385,21 +288,15 @@ Il pannello non blocca il tocco.</div>
                             Masseria La Morella
                         </h3>
                         <div class="navigation-buttons">
-                            <a
-                                class="button button-small map-button"
-                                href="https://maps.app.goo.gl/2apy9TeoYDG768eM7"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a class="button button-small map-button"
+                               href="https://maps.app.goo.gl/2apy9TeoYDG768eM7"
+                               target="_blank" rel="noopener noreferrer">
                                 <img class="navigation-logo" src="images/maps.png" alt="" draggable="false">
                                 Maps
                             </a>
-                            <a
-                                class="button button-small map-button"
-                                href="https://waze.com/ul?ll=40.610224%2C14.942694&navigate=yes"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a class="button button-small map-button"
+                               href="https://waze.com/ul?ll=40.610224%2C14.942694&navigate=yes"
+                               target="_blank" rel="noopener noreferrer">
                                 <img class="navigation-logo" src="images/waze.png" alt="" draggable="false">
                                 Waze
                             </a>
@@ -417,12 +314,9 @@ Il pannello non blocca il tocco.</div>
                     Condividi con noi le foto del nostro giorno
                 </h2>
                 <div class="album-card">
-                    <a
-                        class="button button-primary"
-                        href="https://www.wedshoots.com/it?albumId=ITb2ea31c8"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                    <a class="button button-primary"
+                       href="https://www.wedshoots.com/it?albumId=ITb2ea31c8"
+                       target="_blank" rel="noopener noreferrer">
                         Apri WedShoots
                     </a>
                     <div class="access-code">
@@ -448,13 +342,8 @@ Il pannello non blocca il tocco.</div>
                     nel nostro giorno. Se desideri contribuire alla
                     realizzazione del nostro sogno, clicca qui
                 </p>
-                <button
-                    class="button"
-                    id="giftToggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="giftDetails"
-                >
+                <button class="button" id="giftToggle" type="button"
+                        aria-expanded="false" aria-controls="giftDetails">
                     <span aria-hidden="true">💝</span>
                     Scopri di più
                 </button>
@@ -495,46 +384,25 @@ Il pannello non blocca il tocco.</div>
     </div>
 
     <!-- CALENDARIO -->
-    <dialog
-        class="calendar-dialog"
-        id="calendarDialog"
-        aria-labelledby="calendarTitle"
-        aria-describedby="calendarDate"
-    >
+    <dialog class="calendar-dialog" id="calendarDialog"
+            aria-labelledby="calendarTitle" aria-describedby="calendarDate">
         <div class="calendar-paper">
-            <button
-                class="calendar-close"
-                id="calendarClose"
-                type="button"
-                aria-label="Chiudi calendario"
-                autofocus
-            >×</button>
+            <button class="calendar-close" id="calendarClose" type="button"
+                    aria-label="Chiudi calendario" autofocus>×</button>
             <h2 id="calendarTitle">
                 <em>Matrimonio Enrico &amp; Annachiara ❤️</em>
             </h2>
             <p id="calendarDate">12 giugno 2027</p>
             <div class="calendar-actions">
-                <a
-                    class="button button-secondary"
-                    id="calendarGoogle"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a class="button button-secondary" id="calendarGoogle"
+                   target="_blank" rel="noopener noreferrer">
                     Google Calendar
                 </a>
-                <button
-                    class="button button-secondary"
-                    id="calendarApple"
-                    type="button"
-                >
+                <button class="button button-secondary" id="calendarApple" type="button">
                     Apple Calendar
                 </button>
-                <a
-                    class="button button-secondary"
-                    id="calendarOutlook"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a class="button button-secondary" id="calendarOutlook"
+                   target="_blank" rel="noopener noreferrer">
                     Outlook
                 </a>
             </div>
