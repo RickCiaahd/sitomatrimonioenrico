@@ -101,8 +101,8 @@ function hideEnvelopeIfOutside() {
         bodyRightPath.getBoundingClientRect().top,
         bodyBottomPath.getBoundingClientRect().top
     );
-    // Anticipa la chiusura negli ultimi 24 px di uscita dei lembi.
-    if (bodyTop >= screenBottom - 24) hideEnvelopeContainer();
+    // Anticipa la chiusura negli ultimi 48 px di uscita dei lembi.
+    if (bodyTop >= screenBottom - 48) hideEnvelopeContainer();
 }
 
 function unlockPageScroll() {
