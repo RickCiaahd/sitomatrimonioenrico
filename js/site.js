@@ -562,6 +562,17 @@ document.querySelectorAll("dialog.calendar-dialog").forEach(dialog => {
             update();
         }
     });
+    function pauseWhenAway() {
+        audio.pause();
+        update();
+    }
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) pauseWhenAway();
+    });
+    window.addEventListener("pagehide", pauseWhenAway);
+    audio.addEventListener("play", () => {
+        if (document.hidden) pauseWhenAway();
+    });
     ["play", "pause", "ended", "volumechange", "error"].forEach(event => audio.addEventListener(event, update));
     update();
 })();
