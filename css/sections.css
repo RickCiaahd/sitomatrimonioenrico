@@ -179,25 +179,10 @@
    RSVP
 ======================================================= */
 
-#rsvp .button-primary {
-    background:
-        #ED81C0;
-
-    border-color:
-        #ED81C0;
-
-    color:
-        #FFFFFF;
-}
 
 
-#rsvp .button-primary:hover {
-    background:
-        #E673B6;
 
-    border-color:
-        #E673B6;
-}
+
 
 
 /* =======================================================
@@ -266,52 +251,20 @@
    GOOGLE MAPS
 ======================================================= */
 
-.map-button[href*="maps"] {
-    background:
-        #6770E1;
-
-    color:
-        #FFFFFF;
-
-    border:
-        1px solid
-        #2A30A4;
-}
 
 
-.map-button[href*="maps"]:hover {
-    background:
-        #5C65D8;
 
-    border-color:
-        #2A30A4;
-}
+
 
 
 /* =======================================================
    WAZE
 ======================================================= */
 
-.map-button[href*="waze"] {
-    background:
-        rgba(255, 255, 255, 0.88);
-
-    color:
-        #2A30A4;
-
-    border:
-        1px solid
-        #2A30A4;
-}
 
 
-.map-button[href*="waze"]:hover {
-    background:
-        #FFFFFF;
 
-    color:
-        #2A30A4;
-}
+
 
 
 /* =======================================================
@@ -1131,15 +1084,8 @@
 .church-place { min-width: 0; }
 .church-place .ceremony-link { margin-top: 8px; }
 .church-place .ceremony-button { margin-top: 0; }
-#placeApple {
-    background: #ABA5F0;
-    border: 1px solid #2A30A4;
-    color: #FFFFFF;
-}
-#placeApple:hover, #placeApple:active {
-    background: #9181BB;
-    border-color: #2A30A4;
-}
+
+
 .calendar-close {
     background: #ED81C0;
     color: #FFFFFF;
@@ -1212,3 +1158,6 @@
 #scrollIndicator.visible { pointer-events: auto; cursor: pointer; min-width: 44px; min-height: 44px; }
 html.envelope-closed #scrollIndicator { pointer-events: none; }
 #scrollIndicator:focus-visible { outline: 2px solid #9181BB; outline-offset: 4px; }
+
+/* LOGHI DEI CALENDARI */
+.calendar-actions .button { gap: 8px; }
