@@ -1161,3 +1161,14 @@ html.envelope-closed #scrollIndicator { pointer-events: none; }
 
 /* LOGHI DEI CALENDARI */
 .calendar-actions .button { gap: 8px; }
+
+/* FONT DELLA DATA HERO PER I TESTI DEL SITO.
+   La hero e il countdown mantengono le proprie regole. */
+.section,
+.section *,
+.calendar-dialog,
+.calendar-dialog *,
+#scrollIndicator,
+#scrollIndicator * {
+    font-family: Georgia, "Times New Roman", serif;
+}
