@@ -1122,3 +1122,28 @@
 .place-open { width: 100%; white-space: normal; }
 .ceremony-link { margin-top: 24px; text-align: center; }
 #placeTitle { font-style: italic; }
+
+/* SPAZIATURA LUOGHI E COLORI DELLE FINESTRE */
+.places-grid {
+    gap: 28px 32px;
+    align-items: start;
+}
+.church-place { min-width: 0; }
+.church-place .ceremony-link { margin-top: 8px; }
+.church-place .ceremony-button { margin-top: 0; }
+#placeApple {
+    background: #ABA5F0;
+    border-color: #ABA5F0;
+    color: #FFFFFF;
+}
+#placeApple:hover, #placeApple:active {
+    background: #9181BB;
+    border-color: #9181BB;
+}
+.calendar-close {
+    background: #DCA6B8;
+    color: #FFFFFF;
+}
+.calendar-close:hover, .calendar-close:active {
+    background: #C98FA3;
+}
