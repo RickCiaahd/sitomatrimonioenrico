@@ -514,22 +514,25 @@ document.querySelectorAll("dialog.calendar-dialog").forEach(dialog => {
     });
 });
 
-/* MUSICA ALL’APERTURA DELLA BUSTA */
+/* MUSICA: SCELTA DISPONIBILE ANCHE A BUSTA CHIUSA */
 (() => {
     const audio = document.getElementById("weddingMusic");
     const button = document.getElementById("musicToggle");
     const status = document.getElementById("musicStatus");
     if (!audio || !button) return;
+    let envelopeStarted = false;
+    let mutedByUser = false;
     function update() {
-        const silent = audio.paused || audio.muted || audio.ended;
+        const silent = mutedByUser || (envelopeStarted && (audio.paused || audio.ended));
         button.classList.toggle("is-muted", silent);
         const label = silent ? "Attiva la musica" : "Disattiva la musica";
-        button.setAttribute("aria-label", label);
-        button.title = label;
+        button.setAttribute("aria-label", envelopeStarted ? label : label + " prima di aprire l’invito");
+        button.title = button.getAttribute("aria-label");
     }
     async function play() {
+        if (mutedByUser) return;
+        audio.muted = false;
         try {
-            audio.muted = false;
             await audio.play();
             if (status) status.textContent = "";
         } catch {
@@ -538,14 +541,24 @@ document.querySelectorAll("dialog.calendar-dialog").forEach(dialog => {
         update();
     }
     window.addEventListener("envelopeopening", () => {
-        button.hidden = false;
-        play();
+        envelopeStarted = true;
+        if (!mutedByUser) play();
+        update();
     }, { once: true });
-    button.addEventListener("click", () => {
-        if (audio.paused || audio.ended) {
+    button.addEventListener("click", event => {
+        event.stopPropagation();
+        if (!envelopeStarted) {
+            mutedByUser = !mutedByUser;
+            audio.muted = mutedByUser;
+            update();
+            return;
+        }
+        if (mutedByUser || audio.paused || audio.ended) {
+            mutedByUser = false;
             play();
         } else {
-            audio.muted = !audio.muted;
+            mutedByUser = true;
+            audio.muted = true;
             update();
         }
     });
