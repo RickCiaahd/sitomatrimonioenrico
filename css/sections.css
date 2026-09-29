@@ -1147,3 +1147,30 @@
 .calendar-close:hover, .calendar-close:active {
     background: #E673B6;
 }
+
+/* ZOOM INVERSO ALLA CHIUSURA */
+.calendar-dialog { --dialog-close-scale: 0.33; }
+.rsvp-dialog { --dialog-close-scale: 0.30; }
+.calendar-dialog[open].is-closing {
+    animation: dialog-disappear 400ms cubic-bezier(.64, 0, .78, 0) both;
+    pointer-events: none;
+}
+.calendar-dialog[open].is-closing::backdrop {
+    animation: calendar-fade 400ms ease reverse both;
+}
+@keyframes dialog-disappear {
+    from {
+        transform: var(--dialog-close-transform, scale(1));
+        opacity: var(--dialog-close-opacity, 1);
+    }
+    to {
+        transform: scale(var(--dialog-close-scale));
+        opacity: 0;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .calendar-dialog[open].is-closing,
+    .calendar-dialog[open].is-closing::backdrop {
+        animation: none;
+    }
+}
