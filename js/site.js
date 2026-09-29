@@ -118,10 +118,12 @@ function updateScrollIndicator() {
         );
     }
 
-    if (
-        canScroll &&
-        distanceFromBottom > 100
-    ) {
+    const indicatorVisible = canScroll && distanceFromBottom > 100;
+    const canActivate = indicatorVisible && !document.documentElement.classList.contains("envelope-closed");
+    scrollIndicator.tabIndex = canActivate ? 0 : -1;
+    scrollIndicator.setAttribute("aria-hidden", String(!canActivate));
+
+    if (indicatorVisible) {
         scrollIndicator.classList.add(
             "visible"
         );
@@ -550,3 +552,23 @@ document.querySelectorAll("dialog.calendar-dialog").forEach(dialog => {
     ["play", "pause", "ended", "volumechange", "error"].forEach(event => audio.addEventListener(event, update));
     update();
 })();
+
+/* UN PASSO DI SCORRIMENTO A OGNI TOCCO */
+if (scrollIndicator) {
+    function scrollOneStep() {
+        if (document.documentElement.classList.contains("envelope-closed")) return;
+        const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        const remaining = Math.max(0, document.documentElement.scrollHeight - window.innerHeight - window.scrollY);
+        window.scrollBy({
+            top: Math.min(Math.round(viewportHeight * 0.65), remaining),
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"
+        });
+    }
+    scrollIndicator.addEventListener("click", scrollOneStep);
+    scrollIndicator.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            scrollOneStep();
+        }
+    });
+}
