@@ -1133,17 +1133,17 @@
 .church-place .ceremony-button { margin-top: 0; }
 #placeApple {
     background: #ABA5F0;
-    border-color: #ABA5F0;
+    border: 1px solid #2A30A4;
     color: #FFFFFF;
 }
 #placeApple:hover, #placeApple:active {
     background: #9181BB;
-    border-color: #9181BB;
+    border-color: #2A30A4;
 }
 .calendar-close {
-    background: #DCA6B8;
+    background: #ED81C0;
     color: #FFFFFF;
 }
 .calendar-close:hover, .calendar-close:active {
-    background: #C98FA3;
+    background: #E673B6;
 }
