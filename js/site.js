@@ -511,3 +511,42 @@ document.querySelectorAll("dialog.calendar-dialog").forEach(dialog => {
         closeDialogAnimated(dialog);
     });
 });
+
+/* MUSICA ALL’APERTURA DELLA BUSTA */
+(() => {
+    const audio = document.getElementById("weddingMusic");
+    const button = document.getElementById("musicToggle");
+    const status = document.getElementById("musicStatus");
+    if (!audio || !button) return;
+    function update() {
+        const silent = audio.paused || audio.muted || audio.ended;
+        button.classList.toggle("is-muted", silent);
+        const label = silent ? "Attiva la musica" : "Disattiva la musica";
+        button.setAttribute("aria-label", label);
+        button.title = label;
+    }
+    async function play() {
+        try {
+            audio.muted = false;
+            await audio.play();
+            if (status) status.textContent = "";
+        } catch {
+            if (status) status.textContent = "Musica non disponibile: tocca la nota per riprovare.";
+        }
+        update();
+    }
+    window.addEventListener("envelopeopening", () => {
+        button.hidden = false;
+        play();
+    }, { once: true });
+    button.addEventListener("click", () => {
+        if (audio.paused || audio.ended) {
+            play();
+        } else {
+            audio.muted = !audio.muted;
+            update();
+        }
+    });
+    ["play", "pause", "ended", "volumechange", "error"].forEach(event => audio.addEventListener(event, update));
+    update();
+})();
