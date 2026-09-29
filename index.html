@@ -452,14 +452,10 @@
 
     <!-- MUSICA: inserire il brano in audio/canzone.mp3 -->
     <audio id="weddingMusic" src="audio/canzone.mp3" preload="none"></audio>
-    <button id="musicToggle" class="music-toggle is-muted" type="button"
-            aria-label="Attiva la musica" title="Attiva la musica" hidden>
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M9 17V5l11-2v12M9 8l11-2" fill="none" stroke="currentColor" stroke-width="2"/>
-            <ellipse cx="6" cy="18" rx="3" ry="2.5" fill="currentColor"/>
-            <ellipse cx="17" cy="16" rx="3" ry="2.5" fill="currentColor"/>
-            <path class="music-slash" d="M3 3l18 18" stroke="currentColor" stroke-width="2.5"/>
-        </svg>
+    <button id="musicToggle" class="music-toggle" type="button"
+            aria-label="Disattiva la musica prima di aprire l’invito"
+            title="Disattiva la musica prima di aprire l’invito">
+        <span class="music-emoji" aria-hidden="true">🎵</span>
     </button>
     <span id="musicStatus" class="music-status" role="status"></span>
 
