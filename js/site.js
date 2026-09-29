@@ -233,7 +233,7 @@ if (
         previousFocus = document.activeElement;
         dialog.showModal();
     });
-    closeButton.addEventListener("click", () => dialog.close());
+    closeButton.addEventListener("click", () => closeDialogAnimated(dialog));
     function isOutside(event) {
         const rect = dialog.getBoundingClientRect();
         return event.clientX < rect.left || event.clientX > rect.right ||
@@ -244,7 +244,7 @@ if (
     });
     dialog.addEventListener("click", event => {
         if (pointerStartedOutside && event.target === dialog && isOutside(event)) {
-            dialog.close();
+            closeDialogAnimated(dialog);
         }
         pointerStartedOutside = false;
     });
@@ -316,7 +316,7 @@ if (
         dialog.showModal();
     });
 
-    closeButton.addEventListener("click", () => dialog.close());
+    closeButton.addEventListener("click", () => closeDialogAnimated(dialog));
 
     // Il backdrop nativo inoltra il click al dialog.
     let pointerStartedOutside = false;
@@ -330,7 +330,7 @@ if (
     });
     dialog.addEventListener("click", event => {
         if (pointerStartedOutside && event.target === dialog && isOutside(event)) {
-            dialog.close();
+            closeDialogAnimated(dialog);
         }
         pointerStartedOutside = false;
     });
@@ -416,7 +416,7 @@ if (
         if (!frame.hasAttribute("src")) frame.src = frame.dataset.src;
         dialog.showModal();
     });
-    close.addEventListener("click", () => dialog.close());
+    close.addEventListener("click", () => closeDialogAnimated(dialog));
     function isOutside(event) {
         const rect = dialog.getBoundingClientRect();
         return event.clientX < rect.left || event.clientX > rect.right ||
@@ -426,7 +426,7 @@ if (
         pointerStartedOutside = event.target === dialog && isOutside(event);
     });
     dialog.addEventListener("click", event => {
-        if (pointerStartedOutside && event.target === dialog && isOutside(event)) dialog.close();
+        if (pointerStartedOutside && event.target === dialog && isOutside(event)) closeDialogAnimated(dialog);
         pointerStartedOutside = false;
     });
     dialog.addEventListener("close", () => {
@@ -456,7 +456,7 @@ if (
             dialog.showModal();
         });
     });
-    close.addEventListener("click", () => dialog.close());
+    close.addEventListener("click", () => closeDialogAnimated(dialog));
     function isOutside(event) {
         const rect = dialog.getBoundingClientRect();
         return event.clientX < rect.left || event.clientX > rect.right ||
@@ -466,7 +466,7 @@ if (
         pointerStartedOutside = event.target === dialog && isOutside(event);
     });
     dialog.addEventListener("click", event => {
-        if (pointerStartedOutside && event.target === dialog && isOutside(event)) dialog.close();
+        if (pointerStartedOutside && event.target === dialog && isOutside(event)) closeDialogAnimated(dialog);
         pointerStartedOutside = false;
     });
     dialog.addEventListener("close", () => {
@@ -474,3 +474,40 @@ if (
         if (previousFocus && previousFocus.isConnected) previousFocus.focus({ preventScroll: true });
     });
 })();
+
+/* CHIUSURA ANIMATA DELLE FINESTRE */
+function closeDialogAnimated(dialog) {
+    if (!dialog.open || dialog.classList.contains("is-closing")) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        dialog.close();
+        return;
+    }
+    const style = getComputedStyle(dialog);
+    dialog.style.setProperty("--dialog-close-transform", style.transform);
+    dialog.style.setProperty("--dialog-close-opacity", style.opacity);
+    let fallback;
+    let finished = false;
+    function finish() {
+        if (finished) return;
+        finished = true;
+        clearTimeout(fallback);
+        dialog.removeEventListener("animationend", onEnd);
+        dialog.close();
+        dialog.classList.remove("is-closing");
+        dialog.style.removeProperty("--dialog-close-transform");
+        dialog.style.removeProperty("--dialog-close-opacity");
+    }
+    function onEnd(event) {
+        if (event.target === dialog && event.animationName === "dialog-disappear") finish();
+    }
+    dialog.addEventListener("animationend", onEnd);
+    dialog.classList.add("is-closing");
+    fallback = window.setTimeout(finish, 450);
+}
+
+document.querySelectorAll("dialog.calendar-dialog").forEach(dialog => {
+    dialog.addEventListener("cancel", event => {
+        event.preventDefault();
+        closeDialogAnimated(dialog);
+    });
+});
