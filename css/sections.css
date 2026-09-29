@@ -1187,3 +1187,8 @@ html.envelope-closed #scrollIndicator { pointer-events: none; }
     transform: translate(-50%, -50%) rotate(-45deg);
     border-radius: 2px;
 }
+
+/* DIMENSIONI DELLE ICONE CONTATTI */
+.contact-actions a { min-height: 44px; justify-content: center; }
+.contact-actions img[src="images/whatsapp.png"] { width: 28px; height: 28px; }
+.contact-actions img[src="images/email.png"] { width: 36px; height: 36px; }
