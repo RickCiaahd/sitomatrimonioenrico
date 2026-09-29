@@ -293,6 +293,37 @@
             </div>
         </section>
 
+        <!-- CONTATTI -->
+        <section class="section" id="contatti">
+            <div class="section-inner">
+                <h2 class="section-title">Contattaci</h2>
+                <div class="contacts-grid">
+                    <div class="contact-person">
+                        <h3>Enrico</h3>
+                        <div class="contact-actions">
+                            <a href="https://wa.me/393356113640" target="_blank" rel="noopener noreferrer" aria-label="Scrivi a Enrico su WhatsApp">
+                                <img src="images/whatsapp.png" alt="" loading="lazy"><span>WhatsApp</span>
+                            </a>
+                            <a href="mailto:forte.enrico14@gmail.com" aria-label="Invia un’email a Enrico">
+                                <img src="images/email.png" alt="" loading="lazy"><span>Email</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-person">
+                        <h3>Annachiara</h3>
+                        <div class="contact-actions">
+                            <a href="https://wa.me/393386921569" target="_blank" rel="noopener noreferrer" aria-label="Scrivi ad Annachiara su WhatsApp">
+                                <img src="images/whatsapp.png" alt="" loading="lazy"><span>WhatsApp</span>
+                            </a>
+                            <a href="mailto:aiannone9311@gmail.com" aria-label="Invia un’email ad Annachiara">
+                                <img src="images/email.png" alt="" loading="lazy"><span>Email</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- FIAT 500 -->
         <div class="footer-500" aria-hidden="true">
             <img src="images/500.png" alt="" draggable="false">
@@ -415,6 +446,19 @@
             </div>
         </div>
     </dialog>
+
+    <!-- MUSICA: inserire il brano in audio/canzone.mp3 -->
+    <audio id="weddingMusic" src="audio/canzone.mp3" preload="none"></audio>
+    <button id="musicToggle" class="music-toggle is-muted" type="button"
+            aria-label="Attiva la musica" title="Attiva la musica" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 17V5l11-2v12M9 8l11-2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <ellipse cx="6" cy="18" rx="3" ry="2.5" fill="currentColor"/>
+            <ellipse cx="17" cy="16" rx="3" ry="2.5" fill="currentColor"/>
+            <path class="music-slash" d="M3 3l18 18" stroke="currentColor" stroke-width="2.5"/>
+        </svg>
+    </button>
+    <span id="musicStatus" class="music-status" role="status"></span>
 
     <!-- SCRIPT -->
     <script src="js/envelope.js"></script>
