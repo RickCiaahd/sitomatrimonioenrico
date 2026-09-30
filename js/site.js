@@ -596,3 +596,38 @@ if (scrollIndicator) {
         }
     });
 }
+
+
+/* =======================================================
+   REVEAL ON SCROLL
+======================================================= */
+(function initRevealOnScroll() {
+    const items = [
+        ...document.querySelectorAll(
+            ".section-title, .section-text, #rsvpOpen, .calendar-trigger, " +
+            ".places-grid > *, .album-card, #giftToggle, .gift-details, .contact-person"
+        )
+    ];
+
+    if (!items.length) return;
+
+    items.forEach((el, index) => {
+        el.classList.add("reveal-on-scroll");
+        el.style.setProperty("--reveal-delay", ((index % 4) * 70) + "ms");
+    });
+
+    if (!("IntersectionObserver" in window)) {
+        items.forEach(el => el.classList.add("is-visible"));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target);
+        });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+
+    items.forEach(el => observer.observe(el));
+})();
