@@ -124,27 +124,3 @@ button {
     }
 
 }
-
-/* UI V2 */
-.site{isolation:isolate}.site::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 12% 22%,rgba(171,165,240,.08),transparent 28%),radial-gradient(circle at 88% 52%,rgba(205,187,139,.08),transparent 24%),radial-gradient(circle at 18% 82%,rgba(171,165,240,.06),transparent 22%)}button:focus-visible,a:focus-visible,[role="button"]:focus-visible{outline:2px solid var(--lilac-dark);outline-offset:4px}@media(hover:hover){a,button{transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s ease,background-color .28s ease,border-color .28s ease,color .28s ease,opacity .28s ease}}
-
-/* =======================================================
-   UI V3 - CONTRASTO PIÙ ELEGANTE
-======================================================= */
-body {
-    color: #463f3a;
-}
-:root {
-    --text: #463F3A;
-    --muted: #7F766F;
-}
-
-/* =======================================================
-   UI V4 - DETTAGLI GLOBALI
-======================================================= */
-body {
-    text-rendering: optimizeLegibility;
-}
-::selection {
-    background: rgba(171,165,240,.24);
-}
