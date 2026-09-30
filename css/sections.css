@@ -1192,3 +1192,28 @@ html.envelope-closed #scrollIndicator { pointer-events: none; }
 .contact-actions a { min-height: 44px; justify-content: center; }
 .contact-actions img[src="images/whatsapp.png"] { width: 28px; height: 28px; }
 .contact-actions img[src="images/email.png"] { width: 36px; height: 36px; }
+
+/* =======================================================
+   REVEAL ON SCROLL
+   Unica modifica rispetto a main.
+======================================================= */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity .68s ease,
+        transform .68s cubic-bezier(.22, 1, .36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+    .reveal-on-scroll,
+    .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
