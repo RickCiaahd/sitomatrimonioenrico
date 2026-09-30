@@ -923,11 +923,11 @@
 }
 
 .calendar-dialog[open] {
-    animation: calendar-appear 400ms cubic-bezier(.22, 1, .36, 1) both;
+    animation: calendar-appear 520ms cubic-bezier(.22, 1, .36, 1) both;
 }
 
 .calendar-dialog[open]::backdrop {
-    animation: calendar-fade 400ms ease both;
+    animation: calendar-fade 520ms ease both;
 }
 
 .calendar-paper {
@@ -1047,7 +1047,7 @@
     background: #fff;
 }
 .rsvp-dialog[open] {
-    animation: rsvp-appear 400ms cubic-bezier(.22, 1, .36, 1) both;
+    animation: rsvp-appear 520ms cubic-bezier(.22, 1, .36, 1) both;
 }
 @keyframes rsvp-appear {
     from { transform: scale(0.30); opacity: 0; }
@@ -1098,11 +1098,11 @@
 .calendar-dialog { --dialog-close-scale: 0.33; }
 .rsvp-dialog { --dialog-close-scale: 0.30; }
 .calendar-dialog[open].is-closing {
-    animation: dialog-disappear 400ms cubic-bezier(.64, 0, .78, 0) both;
+    animation: dialog-disappear 520ms cubic-bezier(.64, 0, .78, 0) both;
     pointer-events: none;
 }
 .calendar-dialog[open].is-closing::backdrop {
-    animation: calendar-fade 400ms ease reverse both;
+    animation: calendar-fade 520ms ease reverse both;
 }
 @keyframes dialog-disappear {
     from {
