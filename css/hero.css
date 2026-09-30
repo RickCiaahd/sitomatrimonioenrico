@@ -528,3 +528,56 @@
 
 /* UI V2 HERO */
 .hero::before,.hero::after{content:"";position:absolute;width:clamp(120px,18vw,220px);aspect-ratio:1;background:url("../images/ortensie.png") center/contain no-repeat;opacity:.12;pointer-events:none;z-index:1;filter:saturate(.75)}.hero::before{left:max(-70px,-5vw);top:10%;transform:rotate(-18deg)}.hero::after{right:max(-72px,-5vw);bottom:6%;transform:rotate(152deg)}.hero-content::before{content:"";position:absolute;inset:12% 5% 4%;border:1px solid rgba(145,129,187,.08);border-radius:48% 48% 44% 44%/32% 32% 68% 68%;pointer-events:none;z-index:-1}.hero-portrait{width:min(58vw,390px);margin-bottom:10px;translate:var(--hero-x,0) var(--hero-y,0);transition:transform 3.3s cubic-bezier(.22,1,.36,1),translate .35s ease-out}.hero-content{translate:var(--hero-content-x,0) var(--hero-content-y,0);transition:translate .35s ease-out}.hero h1{max-width:100%;text-wrap:balance}.hero-date{position:relative;display:inline-flex;align-items:center;gap:14px}.hero-date::before,.hero-date::after{content:"";width:clamp(28px,7vw,62px);height:1px;background:linear-gradient(90deg,transparent,rgba(145,129,187,.42))}.hero-date::after{transform:scaleX(-1)}.countdown-paper{transform:translateZ(0)}.countdown-paper::after{content:"";position:absolute;inset:7%;border-radius:20px;box-shadow:inset 0 0 0 1px rgba(120,94,75,.04);pointer-events:none}@media(max-width:760px){.hero::before,.hero::after{width:130px;opacity:.1}.hero::before{left:-62px;top:16%}.hero::after{right:-68px;bottom:12%}.hero-content::before{inset:18% 0 4%;border-radius:42px}.hero-portrait{width:min(76vw,350px)}.hero-date{gap:9px}.hero-date::before,.hero-date::after{width:24px}}
+
+/* =======================================================
+   UI V3 - HERO PIÙ DECISA
+======================================================= */
+.hero {
+    min-height: 96vh;
+    padding-top: 26px;
+    padding-bottom: 90px;
+}
+.hero-content {
+    max-width: 880px;
+}
+.hero-portrait {
+    width: min(54vw, 420px);
+    margin-bottom: -4px;
+}
+.hero h1 {
+    font-size: clamp(4.8rem, 10vw, 7.2rem);
+    line-height: .92;
+    margin-top: 2px;
+}
+.hero-date {
+    margin-top: 18px;
+    font-size: .92rem;
+    letter-spacing: .42em;
+}
+.countdown-paper {
+    width: min(88vw, 600px);
+    margin-top: 28px;
+}
+@media (max-width: 760px) {
+    .hero {
+        min-height: 94vh;
+        padding-top: 18px;
+        padding-bottom: 64px;
+    }
+    .hero-portrait {
+        width: min(80vw, 360px);
+        margin-bottom: 0;
+    }
+    .hero h1 {
+        font-size: clamp(4.1rem, 16vw, 5.8rem);
+    }
+    .hero-date {
+        margin-top: 12px;
+        font-size: .78rem;
+        letter-spacing: .25em;
+    }
+    .countdown-paper {
+        width: min(96vw, 560px);
+        margin-top: 22px;
+    }
+}
