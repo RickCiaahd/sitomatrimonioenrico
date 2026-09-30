@@ -138,3 +138,13 @@ body {
     --text: #463F3A;
     --muted: #7F766F;
 }
+
+/* =======================================================
+   UI V4 - DETTAGLI GLOBALI
+======================================================= */
+body {
+    text-rendering: optimizeLegibility;
+}
+::selection {
+    background: rgba(171,165,240,.24);
+}
