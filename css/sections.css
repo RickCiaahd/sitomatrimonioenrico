@@ -2487,3 +2487,102 @@ html.envelope-closed #scrollIndicator { pointer-events: none; }
         max-height: calc(100dvh - 16px);
     }
 }
+
+/* =======================================================
+   PLACE POPUP - FORCE ORIGINAL VISUALS
+   Neutralizza gli override generici aggiunti al calendario.
+======================================================= */
+#placeDialog.calendar-dialog::backdrop {
+    background: rgba(80, 65, 55, 0.18);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+#placeDialog .calendar-paper {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 66px clamp(28px, 8vw, 64px) 60px;
+    border: 0;
+    border-radius: 0;
+    background: url("../images/carta-moduli.png") center / 100% 100% no-repeat;
+    box-shadow: none;
+    overflow: visible;
+    text-align: center;
+}
+
+#placeDialog .calendar-paper::before {
+    content: none;
+    display: none;
+}
+
+#placeDialog .calendar-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #ED81C0;
+    color: #FFFFFF;
+    box-shadow: none;
+    font: 24px/1 Arial, Helvetica, sans-serif;
+    transform: none;
+}
+
+#placeDialog .calendar-close:hover,
+#placeDialog .calendar-close:active {
+    background: #E673B6;
+    transform: none;
+}
+
+#placeDialog .calendar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 0;
+}
+
+#placeDialog .calendar-actions .button {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: 48px;
+    text-decoration: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+#placeDialog #placeTitle {
+    font-style: italic;
+}
+
+#placeDialog.calendar-dialog {
+    box-sizing: border-box;
+    width: min(540px, calc(100% - 24px));
+    max-width: none;
+    max-height: calc(100dvh - 24px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text, #66564b);
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+
+@media (max-width: 760px) {
+    #placeDialog.calendar-dialog {
+        width: min(540px, calc(100% - 16px));
+        max-height: calc(100dvh - 16px);
+    }
+
+    #placeDialog .calendar-paper {
+        padding: 58px 22px 44px;
+    }
+}
