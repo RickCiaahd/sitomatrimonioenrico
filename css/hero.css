@@ -478,3 +478,50 @@
     }
 
 }
+
+
+/* =======================================================
+   UI RESTYLING - HERO
+======================================================= */
+
+.hero {
+    padding-top: 42px;
+    padding-bottom: 72px;
+}
+
+.hero-content {
+    max-width: 760px;
+}
+
+.hero-portrait {
+    filter: drop-shadow(0 18px 34px rgba(78,61,53,.10));
+}
+
+.hero h1 {
+    text-shadow: 0 8px 28px rgba(78,61,53,.08);
+}
+
+.hero-date {
+    margin-top: 14px;
+    letter-spacing: .38em;
+}
+
+.countdown-paper {
+    margin-top: 24px;
+    filter: drop-shadow(0 14px 24px rgba(78,61,53,.08));
+}
+
+@media (max-width: 760px) {
+    .hero {
+        padding-top: 28px;
+        padding-bottom: 54px;
+    }
+
+    .hero h1 {
+        font-size: clamp(3.6rem, 14vw, 5.2rem);
+    }
+
+    .hero-date {
+        letter-spacing: .24em;
+    }
+}
