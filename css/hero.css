@@ -581,3 +581,34 @@
         margin-top: 22px;
     }
 }
+
+/* =======================================================
+   UI V4 - RIFINITURE HERO (modifiche piccole ma visibili)
+   - maggiore equilibrio tra ritratto, nomi, data e countdown
+   - più aria sotto i nomi
+   - countdown leggermente più integrato nella composizione
+======================================================= */
+.hero-content {
+    padding-inline: clamp(8px, 2vw, 20px);
+}
+.hero-portrait {
+    margin-bottom: 6px;
+}
+.hero h1 {
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+.hero-date {
+    margin-bottom: 2px;
+}
+.countdown-paper {
+    margin-top: 22px;
+}
+@media (max-width: 760px) {
+    .hero h1 {
+        line-height: .96;
+    }
+    .hero-date {
+        margin-top: 10px;
+    }
+}
