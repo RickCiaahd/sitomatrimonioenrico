@@ -599,3 +599,17 @@ if (scrollIndicator) {
 
 /* UI V2 reveal */
 (function(){const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');const targets=[...document.querySelectorAll('.section-title,.section-text,#rsvp .button,.calendar-trigger,.places-grid > *,.album-card,#sogno .button,.contact-person')];targets.forEach((el,i)=>{el.classList.add('ui-reveal');el.style.setProperty('--reveal-delay',String(Math.min((i%4)*70,210))+'ms')});if(reduced.matches||!('IntersectionObserver'in window)){targets.forEach(el=>el.classList.add('is-visible'));return}const ob=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(!entry.isIntersecting)return;entry.target.classList.add('is-visible');ob.unobserve(entry.target)})},{threshold:.14,rootMargin:'0px 0px -6% 0px'});targets.forEach(el=>ob.observe(el))})();
+
+
+/* UI V4 - migliora la sequenza delle animazioni per gruppi vicini */
+(function refineRevealDelays(){
+    const groups = [
+        document.querySelectorAll(".places-grid > *"),
+        document.querySelectorAll(".contact-person")
+    ];
+    groups.forEach(group => {
+        group.forEach((el, index) => {
+            el.style.setProperty("--reveal-delay", String(index * 90) + "ms");
+        });
+    });
+})();
